@@ -1,0 +1,125 @@
+/*принадлежащие профильной странице стили*/
+
+.profile {
+    position: relative;
+    display: flex;
+    width: 1440px;
+    height: 815px;
+    margin-top: 64px;
+    background-color: orange;
+    background: linear-gradient(120.59deg, #8C45FF 8.53%, #8DDBDB 88.61%);
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    font-size: 18px;
+}
+
+.sidebar {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    width: 330px;
+    height: 100%;
+    border-radius: 15px 0 0 15px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebarSection {
+    position: absolute;
+    width: 85%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.sidebarSection img {
+    width: 28px;
+    height: 28px;
+    margin-left: auto;
+}
+
+.menu {
+    top: 100px;
+    position: relative;
+    display: flex;
+    align-self: flex-end;
+    margin: 0 auto 0 auto;
+    width: 70%;
+    height: 95%;
+
+}
+
+#edit {
+    width: 90%;
+    height: 70%;
+    margin: auto auto auto auto;
+    display: none;
+}
+
+#edit h3 {
+    font-weight: 300;
+}
+
+#edit input, select {
+    width: 399px;
+    height: 34px;
+    margin-top: 8px;
+    font-size: 20px;
+}
+
+.editSection {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 36px;
+}
+
+#passed {
+    width: 100%;
+    height: 100%;
+    margin: auto auto auto auto;
+    display: none;
+}
+
+#listEntry {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 960px;
+    height: 35px;
+    border-radius: 15px;
+    padding: 0 16px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+#listEntry img {
+    width: 28px;
+    height: 28px;
+    margin: 0 4px 0 4px;
+}
+
+#made {
+    width: 100%;
+    height: 100%;
+    margin: auto auto auto auto;
+    display: none;
+}
+
+#deletionConfirmation {
+    position: fixed;
+    width: 30vw;
+    height: 27vh;
+    left: calc(35vw);
+    top: calc(36.5vh);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), linear-gradient(120.59deg, #8C45FF 8.53%, #8DDBDB 88.61%);
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.25);
+    border-radius: 2vh;
+    text-align: center;
+    z-index: 100;
+    display: none;
+}
+
+#participants {
+    width: 100%;
+    height: 100%;
+    margin: auto auto auto auto;
+    display: none;
+}

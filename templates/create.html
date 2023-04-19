@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>K-quest - Создание квеста</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/common.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/create.css')}}">
+
+    <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
+</head>
+
+<body>
+    <!--Оформление заднего фона-->
+    <div class="globalBackground">
+        <svg height="800" width="1600" style="position: absolute; left: 1100;">
+            <defs>
+                <linearGradient id="ellipseGrad1" x1="26%" y1="10%" x2="97.85%" y2="50%">
+                    <stop offset="26%" style="stop-color:rgba(125, 45, 255, 0.8); stop-opacity:1" />
+                    <stop offset="97.85%" style="stop-color:rgb(0, 255, 71, 0.8); stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <ellipse cx="650" cy="0" rx="400px" ry="550px" fill="url(#ellipseGrad1)"
+                style="position: absolute; filter: blur(100px);" />
+        </svg>
+
+        <svg height="1250" width="1300" style="position: absolute; left: -400px; top: -50px;">
+            <defs>
+                <linearGradient id="ellipseGrad2" x1="17.32%" y1="25%" x2="76.79%" y2="100%">
+                    <stop offset="17.32%" style="stop-color:rgba(13, 255, 255, 0.75); stop-opacity:1" />
+                    <stop offset="76.79%" style="stop-color:rgb(0, 255, 71, 0.75); stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <ellipse cx="650" cy="600" rx="325px" ry="300px" fill="url(#ellipseGrad2)" style="filter: blur(150px);" />
+        </svg>
+
+        <svg height="1500" width="1600" style="position: absolute; left: 600px; top: 800px;">
+            <defs>
+                <linearGradient id="ellipseGrad3" x1="30%" y1="10%" x2="100%" y2="100%">
+                    <stop offset="25%" style="stop-color:rgba(107, 243, 248, 0.8); stop-opacity:1" />
+                    <stop offset="10%" style="stop-color:rgb(125, 45, 255, 0.44); stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <ellipse cx="900" cy="750" rx="400px" ry="400px" fill="url(#ellipseGrad3)" style="filter: blur(150px);" />
+        </svg>
+
+        <svg height="1700" width="2550" style="position: absolute; left: -1200px; top: 700px;">
+            <defs>
+                <linearGradient id="ellipseGrad4" x1="30%" y1="10%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:rgba(125, 45, 255, 0.75); stop-opacity:1" />
+                    <stop offset="10%" style="stop-color:rgb(0, 255, 71, 0.75); stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <ellipse cx="1300" cy="1000" rx="800px" ry="250px" fill="url(#ellipseGrad4)" style="filter: blur(150px);" />
+        </svg>
+    </div>
+
+    <div class="wrapper">
+        <div class="header">
+            <!--Декоративный эллипс-->
+            <div style="position: absolute;">
+                <svg height="250" width="300"
+                    style="position: relative; transform: rotate(-60deg); left: -430px; top: -148px">
+                    <defs>
+                        <linearGradient id="ellipseGrad5" x1="100.0%" y1="100%" x2="0%" y2="100%">
+                            <stop offset="60.32%" style="stop-color:#0038FF; stop-opacity:1" />
+                            <stop offset="0.96%" style="stop-color:rgb(13, 240, 255, 0.83); stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="50" cy="40" rx="25px" ry="14px" fill="url(#ellipseGrad5)"
+                        style="filter: blur(10px);" />
+                </svg>
+            </div>
+
+            <!--Содержимое шапки-->
+            <div class="headerContent">
+                <a style="margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
+                    onclick="returnToIndex()">K-quest</a>
+            </div>
+        </div>
+
+        <!--Основной контент страницы-->
+        <div class="options">
+            <div class="option">
+                <div class="optionContent">
+                    <h2>Создание нового урока</h2>
+                    <input name="questName" placeholder="Введите название урока"
+                        style="display: block; height: 40px; margin-top: 16px" id="questName" />
+                    <textarea placeholder="Введите описание урока" style="height: 207px; margin: 48px 0 48px 0"
+                        id="questDescription"></textarea>
+                </div>
+            </div>
+
+            <div class="option">
+                <div class="optionContent">
+                    <h2>Загрузите задания</h2>
+                    <div class="taskLineBlock">
+                        <a class="taskLineControls" onclick="scrollTasks(-1)">&lt</a>
+                        <div id="taskLine">
+                            <div id="tasks" style="position: relative; left: 0px"></div>
+                        </div>
+                        <a class="taskLineControls" onclick="scrollTasks(1)">&gt</a>
+                    </div>
+                    <!--Для создания очереди заданий; в будущем удалить-->
+                    <script>generateTaskLine(1)</script>
+
+                    <textarea placeholder="Введите текст задания" style="height: 108px; margin-top: 48px" id="taskText"
+                        onchange="saveTaskData(); isFull()"></textarea>
+
+                    <h3>Подсказка</h3>
+                    <textarea placeholder="Введите текст подсказки" style="height: 108px" id="taskHint"
+                        onchange="saveTaskData(); isFull()"></textarea>
+
+                    <!--Загрузка файлов не работает, сделать позже-->
+                    <div style="display: flex; align-items: center; margin-top: 32px">
+                        <img src="{{ url_for('static',filename = 'images/attachicon.png')}}" style="width: 24px; height: 24px;" />
+                        <a style="display: flex; font-size: 20px; margin-left: 8px">Прикрепить файл</a>
+                    </div>
+
+                    <h3>Ответ</h3>
+                    <textarea placeholder="Введите текст ответа" style="height: 108px" id="taskAnswer"
+                        onchange="saveTaskData(); isFull()"></textarea>
+
+                    <button
+                        style="width: 157px; height: 40px; margin: 32px auto 0 auto; background: linear-gradient(180deg, rgba(36, 184, 86, 0.47) 0%, #142E7D 0.02%, #146A9A 159.17%); box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); border-radius: 5px;"
+                        onclick="clickedOnNext()">ДАЛЕЕ</button>
+                </div>
+            </div>
+        </div>
+
+        <!--Главная кнопка страницы-->
+        <div style="position: relative; width: 684px; top: -300px">
+            <button style="margin: 0 auto; width: 302px; height: 80px; font-size: 32px; background: linear-gradient(180deg, #7A27FF 0%,
+            #AC78FF 100%); box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); border-radius: 50px;  display: none"
+                id="createButton">Создать
+                квест</button>
+        </div>
+    </div>
+</body>
+
+</html>

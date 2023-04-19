@@ -1,0 +1,50 @@
+/*принадлежащие странице создания квеста стили*/
+
+input, textarea {
+    font-size: 24px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    resize: none
+}
+
+a {
+    user-select: none;
+}
+
+h3 {
+    margin: 32px 0 12px 0;
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.option {
+    height: fit-content;
+}
+
+.optionContent {
+    width: 80%;
+    margin: 5% 10%
+}
+
+.taskLineBlock {
+    display: flex;
+    background-color: white;
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 16px;
+    align-items: center;
+
+}
+
+.taskLineControls {
+    width: 2.5%;
+    font-size: 24px;
+    color: black; 
+}
+
+#taskLine {
+    width: 95%;
+    height: 100%;
+    overflow: hidden;
+}
