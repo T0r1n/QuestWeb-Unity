@@ -36,10 +36,19 @@ function resetQuestSelection() {
     indicator[1].checked = true; indicator[1].disabled = false
 }
 
+
 function clickOnProfile() {
     // если пользователь кликает на иконку профиля, то проверяется, вошел ли он в систему
     // если нет, то открыть меню входа
-    openAuth()
+
+    var loginuser = document.getElementById('my-data').getAttribute('loginuser');
+    if (loginuser !== 'None'){
+        window.location = 'http://127.0.0.1:5000/profile'
+    }
+    else if (loginuser == 'None'){
+        openAuth()
+    }
+
 }
 
 function openAuth() {

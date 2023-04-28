@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/common.css')}}">
     <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/create.css')}}">
 
-    <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
+
 </head>
 
 <body>
+    <div id="data" qcount={{ count }} style="display: none;"></div>
+    <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
     <!--Оформление заднего фона-->
     <div class="globalBackground">
         <svg height="800" width="1600" style="position: absolute; left: 1100;">
@@ -75,19 +77,22 @@
             <!--Содержимое шапки-->
             <div class="headerContent">
                 <a style="margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
-                    onclick="returnToIndex()">K-quest</a>
+                    onclick="window.location = 'http://127.0.0.1:5000/'" >K-quest</a>
             </div>
         </div>
 
         <!--Основной контент страницы-->
-        <div class="options">
-            <div class="option">
-                <div class="optionContent">
+        <div class="options" >
+            <div class="option" >
+                <div class="optionContent" >
                     <h2>Создание нового урока</h2>
-                    <input name="questName" placeholder="Введите название урока"
+                    <input name="questName" placeholder="Введите название квеста"
                         style="display: block; height: 40px; margin-top: 16px" id="questName" />
-                    <textarea placeholder="Введите описание урока" style="height: 207px; margin: 48px 0 48px 0"
+                    <textarea placeholder="Введите описание квеста" style="height: 207px; margin: 48px 0 48px 0"
                         id="questDescription"></textarea>
+<!--                    <button-->
+<!--                        style="width: 157px; height: 40px; margin: -20px auto 0 auto; background: linear-gradient(180deg, rgba(36, 184, 86, 0.47) 0%, #142E7D 0.02%, #146A9A 159.17%); box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); border-radius: 5px;"-->
+<!--                        onclick="">Создать</button>-->
                 </div>
             </div>
 
@@ -123,7 +128,7 @@
 
                     <button
                         style="width: 157px; height: 40px; margin: 32px auto 0 auto; background: linear-gradient(180deg, rgba(36, 184, 86, 0.47) 0%, #142E7D 0.02%, #146A9A 159.17%); box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); border-radius: 5px;"
-                        onclick="clickedOnNext()">ДАЛЕЕ</button>
+                        onclick="creatJSON();clickedOnNext()">ДАЛЕЕ</button>
                 </div>
             </div>
         </div>
@@ -131,11 +136,13 @@
         <!--Главная кнопка страницы-->
         <div style="position: relative; width: 684px; top: -300px">
             <button style="margin: 0 auto; width: 302px; height: 80px; font-size: 32px; background: linear-gradient(180deg, #7A27FF 0%,
-            #AC78FF 100%); box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); border-radius: 50px;  display: none"
+            #AC78FF 100%); box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); border-radius: 50px;  display: none" onclick="SendJSON();window.location = 'http://127.0.0.1:5000/profile'"
                 id="createButton">Создать
                 квест</button>
         </div>
     </div>
+
+
 </body>
 
 </html>

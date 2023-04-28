@@ -76,7 +76,7 @@
             <!--Содержимое шапки-->
             <div class="headerContent">
                 <a style="margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
-                    onclick="returnToIndex()">K-quest</a>
+                    onclick="window.location = 'http://127.0.0.1:5000/'">K-quest</a>
             </div>
         </div>
 
@@ -111,50 +111,52 @@
             <div class="menu">
                 <!--Редактирование профиля-->
                 <div id="edit">
-                    <div class="editSection">
-                        <div>
-                            <h3>Ник</h3>
-                            <input type="text" name="nickname" placeholder={{data[0]}} ></input>
+                    <form method="post" action="/profile/edit">
+                        <div class="editSection">
+                            <div>
+                                <h3>Ник</h3>
+                                <input type="text" name="newnickname" placeholder={{data[2]}} ></input>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="editSection">
-                        <div>
-                            <h3>Логин</h3>
-                            <input type="text" name="login" placeholder={{data[0]}} readonly></input>
+                        <div class="editSection">
+                            <div>
+                                <h3>Логин</h3>
+                                <input type="text" name="login" placeholder={{data[0]}} readonly></input>
+                            </div>
+                            <div>
+                                <h3>Пароль</h3>
+                                <input type="text" name="newpassword" placeholder="Пароль"></input>
+                            </div>
                         </div>
-                        <div>
-                            <h3>Пароль</h3>
-                            <input type="text" name="password" placeholder="Пароль"></input>
-                        </div>
-                    </div>
 
-<!--                    <div class="editSection">-->
-<!--                        <div>-->
-<!--                            <h3>Секретный вопрос</h3>-->
-<!--                            <select name="securityQuestion[]">-->
-<!--                                <option value="" disabled selected>Секретный вопрос</option>-->
-<!--                                <option value="1">Вопрос 1</option>-->
-<!--                                <option value="2">Вопрос 2</option>-->
-<!--                                <option value="3">Вопрос 3</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div>-->
-<!--                            <h3>Ответ на секретный вопрос</h3>-->
-<!--                            <input type="text" name="securityAnswer" placeholder="************"></input>-->
-<!--                        </div>-->
-<!--                    </div>-->
+    <!--                    <div class="editSection">-->
+    <!--                        <div>-->
+    <!--                            <h3>Секретный вопрос</h3>-->
+    <!--                            <select name="securityQuestion[]">-->
+    <!--                                <option value="" disabled selected>Секретный вопрос</option>-->
+    <!--                                <option value="1">Вопрос 1</option>-->
+    <!--                                <option value="2">Вопрос 2</option>-->
+    <!--                                <option value="3">Вопрос 3</option>-->
+    <!--                            </select>-->
+    <!--                        </div>-->
+    <!--                        <div>-->
+    <!--                            <h3>Ответ на секретный вопрос</h3>-->
+    <!--                            <input type="text" name="securityAnswer" placeholder="************"></input>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
 
-                    <div class="editSection" style="margin-top: 64px">
-                        <div style="display: flex; align-items: center;">
-                            <button
-                                style="width: 279px; height: 45px; display: flex; align-items: center; justify-content: center; background: #f0efef; color: black; box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); border-radius: 30px">
-                                <img src="{{ url_for('static',filename = 'images/savechangesicon.png')}}" width="24" height="24">Сохранить
-                                изменения</button>
-                            <a style="margin-left: 24px; font-size: 20px" onclick="openDeletionConfirmation()">Удалить
-                                аккаунт</a>
+                        <div class="editSection" style="margin-top: 64px">
+                            <div style="display: flex; align-items: center;">
+                                <button onclick="window.location = 'http://127.0.0.1:5000/profile/edit'"
+                                    style="width: 279px; height: 45px; display: flex; align-items: center; justify-content: center; background: #f0efef; color: black; box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); border-radius: 30px">
+                                    <img src="{{ url_for('static',filename = 'images/savechangesicon.png')}}" width="24" height="24">Сохранить
+                                    изменения</button>
+                                <a style="margin-left: 24px; font-size: 20px" onclick="openDeletionConfirmation()">Удалить
+                                    аккаунт</a>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <!--Пройденные квесты-->
@@ -221,17 +223,19 @@
 
         <!--Сплывающее окно удаления аккаунта-->
         <div id="deletionConfirmation">
-            <h2 style="color: black; font-weight: 100; font-size: 2.5vh; margin-top: 7.5vh">Вы уверены, что хотите
-                удалить
-                аккаунт?</h2>
+            <form method="post" action="/profile/del">
+                <h2 style="color: black; font-weight: 100; font-size: 2.5vh; margin-top: 7.5vh">Вы уверены, что хотите
+                    удалить
+                    аккаунт?</h2>
 
-            <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
-                <button
-                    style="display: inline; width: 12vw; height: 5vh; font-size: 2.5vh; background: #f0efef; color: black; box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); border-radius: 3vh; padding: 0 0"
-                    onclick="deleteAccount()">Удалить
-                    аккаунт</button>
-                <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>
-            </div>
+                <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
+                    <button type="submit"
+                        style="display: inline; width: 12vw; height: 5vh; font-size: 2.5vh; background: #f0efef; color: black; box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); border-radius: 3vh; padding: 0 0"
+                        onclick="window.location = 'http://127.0.0.1:5000/profile/del'">Удалить
+                        аккаунт</button>
+                    <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>
+                </div>
+            </form>
         </div>
     </div>
 

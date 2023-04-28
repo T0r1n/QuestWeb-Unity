@@ -1,4 +1,9 @@
-let taskCount = 32 // условное число заданий, оно должно поступать с сервера(?) при запросе пользователя на создание квеста
+let taskCount = document.getElementById('data').getAttribute('qcount');
+taskCount = Number(taskCount)
+//console.log(taskCount);
+//let taskCount = 16
+//let taskCount = 32 // условное число заданий, оно должно поступать с сервера(?) при запросе пользователя на создание квеста
+
 let activeTask = 1 // выбранное задание, по умолчанию - первое
 let scrollLimit = taskCount / 12.0 // сколько раз можно прокрутить задания
 let scrollLevel = 1 // уровень прокрутки; по умолчанию - 1
@@ -40,7 +45,7 @@ function generateTaskLine() {
 
         task.innerHTML = (i)
         task.setAttribute("id", i)
-        task.setAttribute("onClick", "clickedOnTask(event)")
+        //task.setAttribute("onClick", "clickedOnTask(event)")
 
         container.appendChild(task)
         tasks.appendChild(container)
@@ -74,8 +79,30 @@ function clickedOnTask(event) {
     pickTask(event.target.id)
 }
 
+function VoidCheck(){
+    var pq_text = document.getElementById("taskText").value.trim();
+    var pq_answer = document.getElementById("taskAnswer").value.trim();
+    var pq_name = document.getElementById("questName").value.trim();
+    var pq_disc = document.getElementById("questDescription").value.trim();
+    if (pq_text != "" && pq_answer != "" && pq_name != "" && pq_disc != ""){
+        return true
+    }else{
+        return false
+    }
+
+}
+
+
+
 function clickedOnNext() {
-    if (activeTask < taskCount) pickTask(parseInt(activeTask) + 1)
+    var pq_name = document.getElementById("questName");
+    var pq_disc = document.getElementById("questDescription");
+    if (VoidCheck() == true){
+        if (activeTask < taskCount) pickTask(parseInt(activeTask) + 1)
+        pq_disc.readOnly = true
+        pq_name.readOnly = true
+    }
+
 }
 
 function pickTask(picked) {
@@ -110,9 +137,65 @@ function isFull() {
 
     for (let i = 0; i < taskCount; i++) {
         if (!taskText[i].trim() ||
-            !taskHint[i].trim() ||
+            //!taskHint[i].trim() ||
             /* здесь будет проверка файла задания*/
             !taskAnswer[i].trim()) { document.querySelector("#createButton").style.display = "none"; return }
     }
     document.querySelector("#createButton").style.display = "block"
 }
+var JsonMass = []
+var itcount = 1;
+var gjsonString;
+
+function creatJSON(){
+
+    if (VoidCheck() == true) {
+
+        if (itcount == 1) {
+            var pq_name = document.getElementById("questName").value;
+            var pq_disc = document.getElementById("questDescription").value;
+
+            var inf = {
+                q_name: pq_name,
+                q_disc: pq_disc
+            };
+            JsonMass.push(inf)
+        }
+        if (itcount < taskCount + 1) {
+            var pq_text = document.getElementById("taskText").value;
+            var pq_answer = document.getElementById("taskAnswer").value;
+            var pq_hint = document.getElementById("taskHint").value;
+            var pq_pic = "";
+            var proom = 1;
+
+            var data = {
+                q_text: pq_text,
+                q_answer: pq_answer,
+                q_hint: pq_hint,
+                q_pic: pq_pic,
+                room: proom,
+            };
+            JsonMass.push(data);
+            var jsonString = JSON.stringify(JsonMass);
+            console.log(JsonMass);
+            itcount++
+        }
+
+        gjsonString = jsonString
+    }
+}
+
+
+function SendJSON(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/create/send");  // URL, по которому будет обрабатываться запрос в Flask
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send(JSON.stringify(gjsonString));
+}
+
+

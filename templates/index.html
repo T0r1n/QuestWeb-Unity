@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/index.css')}}">
 
     <script src="{{ url_for('static',filename = 'scripts/indexinteract.js')}}"></script>
+    <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
 </head>
 
 <body>
     <!--Оформление заднего фона-->
+
     <div class="globalBackground">
         <svg height="800" width="1600" style="position: absolute; left: 1100;">
             <defs>
@@ -91,12 +93,12 @@
 
                 <div id="questSizePicker">
                     <img src="{{ url_for('static',filename = 'images/qsize1.png')}}" class="questSize" style="position: relative; left: 48px; z-index: 0"
-                        onmouseenter="selectQuest(0)" onmouseleave="resetQuestSelection()" onclick="openCreate()">
+                        onmouseenter="selectQuest(0)" onmouseleave="resetQuestSelection()" onclick="window.location = 'http://127.0.0.1:5000/create/16'">
                     <img src="{{ url_for('static',filename = 'images/qsize2.png')}}" class="questSize"
                         style="position: relative; width: 208px; height: 280px; z-index: 1"
-                        onmouseenter="selectQuest(1)" onmouseleave="resetQuestSelection()" onclick="openCreate()">
+                        onmouseenter="selectQuest(1)" onmouseleave="resetQuestSelection()" onclick="window.location = 'http://127.0.0.1:5000/create/24'">
                     <img src="{{ url_for('static',filename = 'images/qsize3.png')}}" class="questSize" style="position: relative; left: -48px; z-index: 0"
-                        onmouseenter="selectQuest(2)" onmouseleave="resetQuestSelection()" onclick="openCreate()">
+                        onmouseenter="selectQuest(2)" onmouseleave="resetQuestSelection()" onclick="window.location = 'http://127.0.0.1:5000/create/32'">
                 </div>
 
                 <div id="pickIndicator">
@@ -170,7 +172,7 @@
                     <h2 style="font-weight: 100; font-size: 2.25vh; margin: 0 0 0.5vh 0">Логин</h2>
                     <input type="text" name="login" placeholder="Введите логин">
                     <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Пароль</h2>
-                    <input type="text" name="password" placeholder="Введите пароль">
+                    <input type="password" name="password" placeholder="Введите пароль">
 
                     <a style="display: block; width: fit-content; margin: 1vh auto 0 auto; font-size: 1.5vh">Забыли
                         пароль?</a>
@@ -204,6 +206,7 @@
             </div>
         </div>
     </div>
+    <div id="my-data" loginuser={{ my_variable }} style="display: none;"></div>
 </body>
 
 </html>
