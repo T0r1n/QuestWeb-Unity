@@ -12,7 +12,7 @@ let scrollValue = 0 // прокрутка в пикселях
 // данные о квестах
 let taskText = Array(taskCount).fill("")
 let taskHint = Array(taskCount).fill("")
-let taskFile = Array(taskCount) // не работает
+let taskFile = Array(taskCount).fill("")
 let taskAnswer = Array(taskCount).fill("")
 
 function returnToIndex() {
@@ -119,6 +119,7 @@ function saveTaskData() {
     // сохраняет данные для активного задания при изменении значений полей
     taskText[activeTask - 1] = document.querySelector("#taskText").value
     taskHint[activeTask - 1] = document.querySelector("#taskHint").value
+    taskFile[activeTask - 1] = document.querySelector("#taskPic").value
     // здесь должно быть сохранение файла задания: taskFile[activeTask - 1] = ...
     taskAnswer[activeTask - 1] = document.querySelector("#taskAnswer").value
 }
@@ -127,6 +128,7 @@ function loadTaskData() {
     // загружает данные выбранного задания в поля
     document.querySelector("#taskText").value = taskText[activeTask - 1]
     document.querySelector("#taskHint").value = taskHint[activeTask - 1]
+    document.querySelector("#taskPic").value = taskFile[activeTask - 1]
     // здесь будет загрузка файла
     document.querySelector("#taskAnswer").value = taskAnswer[activeTask - 1]
 }
@@ -143,6 +145,7 @@ function isFull() {
     }
     document.querySelector("#createButton").style.display = "block"
 }
+
 var JsonMass = []
 var itcount = 1;
 var gjsonString;
@@ -165,7 +168,7 @@ function creatJSON(){
             var pq_text = document.getElementById("taskText").value;
             var pq_answer = document.getElementById("taskAnswer").value;
             var pq_hint = document.getElementById("taskHint").value;
-            var pq_pic = "";
+            var pq_pic = document.getElementById("taskPic").value;
             var proom = 1;
 
             var data = {
@@ -182,6 +185,7 @@ function creatJSON(){
         }
 
         gjsonString = jsonString
+        console.log(gjsonString)
     }
 }
 
@@ -196,6 +200,9 @@ function SendJSON(){
         }
     };
     xhr.send(JSON.stringify(gjsonString));
+    window.location = 'http://127.0.0.1:5000/profile'
 }
+
+
 
 

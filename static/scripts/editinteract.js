@@ -1,0 +1,252 @@
+
+// function save(qdataValue){
+//     console.log(qdataValue)
+// }
+
+let taskCount = document.getElementById('data').getAttribute('qcount');
+taskCount = Number(taskCount)
+//console.log(taskCount);
+//let taskCount = 16
+//let taskCount = 32 // условное число заданий, оно должно поступать с сервера(?) при запросе пользователя на создание квеста
+
+
+let activeTask = 1// выбранное задание, по умолчанию - первое
+let scrollLimit = taskCount / 12.0 // сколько раз можно прокрутить задания
+let scrollLevel = 1 // уровень прокрутки; по умолчанию - 1
+let scrollValue = 0 // прокрутка в пикселях
+
+
+// данные о квестах
+let taskText = Array(taskCount).fill("")
+let taskHint = Array(taskCount).fill("")
+let taskFile = Array(taskCount) // не работает
+let taskAnswer = Array(taskCount).fill("")
+
+
+
+function returnToIndex() {
+    // возврат на главную по клику на логотип
+    location.replace("./index.html")
+}
+
+function generateTaskLine() {
+    // создает очередь заданий нужного размера
+    // !!! сейчас невозможно передать на эту страницу количество заданий, поэтому будет сгенерировано максимальное число - это условность;
+    let tasks = document.querySelector("#tasks")
+
+    for (let i = 1; i <= taskCount; i++) {
+        let container = document.createElement("DIV")
+        let task = document.createElement("A")
+
+        container.style.display = "inline-block"
+        container.style.width = "fit-content"
+
+        task.style.display = "flex"
+        task.style.justifyContent = "center"
+        task.style.alignItems = "center"
+        task.style.fontSize = "20px"
+        task.style.width = "40px"
+        task.style.height = "40px"
+        task.style.borderRadius = "25px"
+        task.style.color = "black"
+
+        if (i != 1) task.style.marginLeft = "3.5px" // отступ для умещения ровно 12 заданий
+
+        task.innerHTML = (i)
+        task.setAttribute("id", i)
+        //task.setAttribute("onClick", "clickedOnTask(event)")
+
+        container.appendChild(task)
+        tasks.appendChild(container)
+    }
+
+    pickTask(1) // первое задание выбрано изначально
+}
+
+function scrollTasks(x) {
+    // скроллит задания
+    // если x == -1, то влево; если x == 1, то вправо
+
+    switch (x) {
+        case -1:
+            if (scrollLevel > 1) {
+                scrollValue += 522
+                document.querySelector("#tasks").style.left = scrollValue.toString() + "px"
+                scrollLevel--
+            }
+            break
+        case 1:
+            if (scrollLevel < scrollLimit) {
+                scrollValue -= 522
+                document.querySelector("#tasks").style.left = scrollValue.toString() + "px"
+                scrollLevel++
+            }
+    }
+
+}
+
+function clickedOnTask(event) {
+    pickTask(event.target.id)
+}
+
+function VoidCheck(){
+    var pq_text = document.getElementById("taskText").value.trim();
+    var pq_answer = document.getElementById("taskAnswer").value.trim();
+    var pq_name = document.getElementById("questName").value.trim();
+    var pq_disc = document.getElementById("questDescription").value.trim();
+    if (pq_text != "" && pq_answer != "" && pq_name != "" && pq_disc != ""){
+        return true
+    }else{
+        return false
+    }
+
+}
+
+
+function clickedOnNext() {
+    // var CodeH2 = document.getElementById('CodeQuest');
+    // var Code = CodeH2.getAttribute('data-codequest');
+    console.log(qdata);
+
+    var pq_name = document.getElementById("questName");
+    var pq_disc = document.getElementById("questDescription");
+    var pq_text = document.getElementById("taskText");
+    var pq_answer = document.getElementById("taskAnswer");
+    var pq_hint = document.getElementById("taskHint");
+    var pq_pic = document.getElementById("taskPic");
+    //var globalData;
+
+
+    // var xhr = new XMLHttpRequest();
+    //
+    // xhr.open('GET', '/create/edit/data/' + QCODE, true);
+    // xhr.onload = function() {
+    //    if (xhr.status === 200) {
+    //        globalData = JSON.parse(xhr.responseText);
+    //        // Вызов функции с передачей глобального массива данных
+    //        pq_text.value = globalData[activeTask-1].text
+    //        pq_answer.value = globalData[activeTask-1].ans
+    //        pq_hint.value = globalData[activeTask-1].hint
+    //        //console.log(globalData);
+    //    }
+    // };
+    //
+    // xhr.send();
+
+
+    if (VoidCheck() == true){
+        if (activeTask < taskCount) pickTask(parseInt(activeTask) + 1)
+        pq_text.value = qdata[activeTask-1][1]
+        pq_hint.value = qdata[activeTask-1][3]
+        pq_answer.value = qdata[activeTask-1][2]
+        pq_pic.value = qdata[activeTask-1][4]
+        pq_disc.readOnly = true
+        pq_name.readOnly = true
+    }
+
+}
+
+function pickTask(picked) {
+    // делает задание активным
+    if (picked < 1 || picked > taskCount) return
+
+    document.querySelector('[id="' + activeTask + '"]').style.backgroundColor = "white"
+    activeTask = picked
+    document.querySelector('[id="' + activeTask + '"]').style.backgroundColor = "rgba(0, 0, 0, 0.3)"
+    //loadTaskData()
+
+}
+
+function saveTaskData() {
+    // сохраняет данные для активного задания при изменении значений полей
+    taskText[activeTask - 1] = document.querySelector("#taskText").value
+    taskHint[activeTask - 1] = document.querySelector("#taskHint").value
+    // здесь должно быть сохранение файла задания: taskFile[activeTask - 1] = ...
+    taskAnswer[activeTask - 1] = document.querySelector("#taskAnswer").value
+}
+
+function loadTaskData() {
+    // загружает данные выбранного задания в поля
+    document.querySelector("#taskText").value = taskText[activeTask - 1]
+    document.querySelector("#taskHint").value = taskHint[activeTask - 1]
+    // здесь будет загрузка файла
+    document.querySelector("#taskAnswer").value = taskAnswer[activeTask - 1]
+}
+
+function isFull() {
+    // проверяет заполнены ли все поля во всех заданиях
+    // если да, то отображает кнопку "создать квест"
+
+    for (let i = 0; i < taskCount; i++) {
+        if (!taskText[i].trim() ||
+            //!taskHint[i].trim() ||
+            /* здесь будет проверка файла задания*/
+            !taskAnswer[i].trim()) { document.querySelector("#createButton").style.display = "none"; return }
+    }
+    document.querySelector("#createButton").style.display = "block"
+}
+var JsonMass = []
+var itcount = 1;
+var gjsonString;
+
+function creatJSON(){
+
+    if (VoidCheck() == true) {
+
+        if (itcount == 1) {
+            var pq_name = document.getElementById("questName").value;
+            var pq_disc = document.getElementById("questDescription").value;
+
+            var inf = {
+                q_name: pq_name,
+                q_disc: pq_disc,
+                q_id: QCODE
+            };
+            JsonMass.push(inf)
+        }
+        if (itcount < taskCount + 1) {
+            var pq_text = document.getElementById("taskText").value;
+            var pq_answer = document.getElementById("taskAnswer").value;
+            var pq_hint = document.getElementById("taskHint").value;
+            var pq_pic = document.getElementById("taskPic").value;
+            var proom = 1;
+
+            var data = {
+                id: qdata[activeTask-1][0],
+                q_text: pq_text,
+                q_answer: pq_answer,
+                q_hint: pq_hint,
+                q_pic: pq_pic,
+                room: proom,
+            };
+            JsonMass.push(data);
+            var jsonString = JSON.stringify(JsonMass);
+            console.log(JsonMass);
+        }
+        itcount++
+        if (itcount == taskCount+1 ){
+            gjsonString = jsonString
+        console.log(gjsonString)
+        }
+
+    }
+}
+
+
+function SendJSON(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/create/sendedit");  // URL, по которому будет обрабатываться запрос в Flask
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send(JSON.stringify(gjsonString));
+    window.location = 'http://127.0.0.1:5000/profile'
+
+}
+
+
+
+

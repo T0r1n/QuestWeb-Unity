@@ -1,6 +1,8 @@
 // функционал страницы профиля
 let activeSection = ""
 
+
+
 function returnToIndex() {
     // возврат на главную по клику на логотип
     location.replace("./index.html")
@@ -60,4 +62,48 @@ function signOut() {
 function openCreate() {
     // переход к созданию квеста
     location.replace('./create.html')
+}
+
+function openNewQuestConfirmation() {
+    blurBg()
+    document.querySelector("#QuestConfirmation").style.display = "block"
+}
+
+function delQuest(code){
+    window.location = 'http://127.0.0.1:5000/profile/questdelete/'+ code
+}
+
+
+function players(code){
+    var container = document.getElementById('participants');
+    container.innerHTML = '';
+    $.ajax({
+          url: '/profile/questdata/'+ code,  // Замените на свой маршрут в Flask
+          type: 'GET',        // Используйте GET, POST или другой метод, подходящий для вашего случая
+            success: function(response) {
+                // Обработка успешного ответа от сервера
+            console.log(response);
+            for (var i = 0; i < response.length; i++) {
+                var item = response[i];
+              //console.log('ID:', item.id);
+              //   var div = document.createElement('div');
+              //   div.className = 'myDiv';
+              //   div.textContent = item.login;
+              //   container.appendChild(div);
+
+                var div = document.createElement('div');
+                div.id = 'listEntry';
+                var anchor = document.createElement('a');
+                anchor.id = 'passedEntryName';
+                anchor.textContent = "Пользователь " + item.login;
+                div.appendChild(anchor);
+                container.appendChild(div);
+            }
+          },
+          error: function(error) {
+            // Обработка ошибки
+            console.error(error);
+          }
+
+    });
 }

@@ -1,13 +1,18 @@
-from flask import Flask, render_template, url_for, request,session, redirect,g
+from flask import Flask, render_template, url_for, request, session, redirect, g, jsonify, send_file, Response
+import requests
 import os
 import json
+import logging
 from flask_mysqldb import MySQL
 from flask_login import LoginManager
-from werkzeug.security import generate_password_hash,check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from UserLogin import UserLogin
+from flask_cors import CORS
 
 login_manager = LoginManager()
 app = Flask(__name__)
+CORS(app)
+app.logger.setLevel(logging.INFO)
 
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
@@ -19,10 +24,8 @@ mysql = MySQL(app)
 app.secret_key = os.urandom(24)
 
 
-
-@app.route('/reg',methods = ['POST','GET'])
+@app.route('/reg', methods=['POST', 'GET'])
 def reg():
-
     cur = mysql.connection.cursor()
     if request.method == 'POST':
         reglogin = request.form['reglogin']
@@ -36,13 +39,14 @@ def reg():
         if res:
             return 'Пользователь уже существует'
         else:
-            cur.execute("INSERT INTO USERS (login,pass,nick,s_quest,s_answer) VALUES (%s,%s,%s,%s,%s)", (reglogin, hesh_newpass, reglogin, squest, sanswer))
+            cur.execute("INSERT INTO USERS (login,pass,nick,s_quest,s_answer) VALUES (%s,%s,%s,%s,%s)",
+                        (reglogin, hesh_newpass, reglogin, squest, sanswer))
             mysql.connection.commit()
             cur.close()
     return render_template('index.html')
 
 
-@app.route('/',methods = ['POST','GET'])
+@app.route('/', methods=['POST', 'GET'])
 def log():
     cur = mysql.connection.cursor()
 
@@ -53,12 +57,9 @@ def log():
         hesh_pass = generate_password_hash(password)
         cur.execute("SELECT * FROM USERS WHERE login = %s", [login])
         res = cur.fetchone()
-        print(res[1])
-        print(hesh_pass)
 
         if res:
             correct = check_password_hash(res[1], password)
-            print(correct)
             if correct:
                 session['user'] = login
                 return redirect(url_for('profile'))
@@ -69,38 +70,80 @@ def log():
     return render_template('index.html', my_variable=g.user)
 
 
-
-
 @app.route('/profile')
 def profile():
     if g.user:
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM USERS WHERE login = %s", [session['user']])
         res = cur.fetchone()
-        return render_template('profile.html', data = res)
+        cur.execute(
+            "SELECT QUESTS.quest_id, QUESTS.title, COUNT(QUESTIONS.question_id) AS question_count FROM QUESTS JOIN QUESTIONS ON QUESTS.quest_id = QUESTIONS.quest WHERE QUESTS.autor = %s GROUP BY QUESTS.quest_id, QUESTS.title;",
+            [session['user']])
+        quests = cur.fetchall()
+        cur.execute(
+            "SELECT quest, title FROM `PROGRESS`,`QUESTS` WHERE PROGRESS.quest = QUESTS.quest_id AND player = %s;",
+            [session['user']])
+        QProgress = cur.fetchall()
+        # print(quests)
+        # print(QProgress)
+        return render_template('profile.html', data=res, lquests=quests, qprog=QProgress)
     return redirect(url_for('log'))
 
-@app.route('/profile/edit',methods = ['POST'])
+
+@app.route('/profile/questdelete/<int:questcode>')
+def delquest(questcode):
+    if g.user:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT autor FROM QUESTS WHERE quest_id = %s", [questcode])
+        res = cur.fetchone()
+        if session['user'] == res[0]:
+            cur.execute("DELETE FROM QUESTS WHERE quest_id = %s", [questcode])
+            mysql.connection.commit()
+            cur.close()
+            return redirect(url_for('profile'))
+    return redirect(url_for('log'))
+
+
+@app.route('/profile/edit', methods=['POST', 'GET'])
 def editprofile():
     if g.user:
         if request.method == 'POST':
             newnick = request.form['newnickname']
             newpassword = request.form['newpassword']
-            if newnick != '':
-                cur = mysql.connection.cursor()
-                cur.execute("UPDATE USERS SET nick = %s WHERE login = %s", [newnick, session['user']])
-                mysql.connection.commit()
-                cur.close()
-            if newpassword != '':
-                cur = mysql.connection.cursor()
-                cur.execute("UPDATE USERS SET pass = %s WHERE login = %s", [newpassword, session['user']])
-                mysql.connection.commit()
-                cur.close()
+            answer = request.form['securityAnswer']
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT s_answer FROM USERS WHERE login = %s", [session['user']])
+            sanswer = cur.fetchone()
+            if answer == sanswer[0]:
+                newhesh_pass = generate_password_hash(newpassword)
+                if newnick != '':
+                    cur = mysql.connection.cursor()
+                    cur.execute("UPDATE USERS SET nick = %s WHERE login = %s", [newnick, session['user']])
+                    mysql.connection.commit()
+                    cur.close()
+                if newpassword != '':
+                    cur = mysql.connection.cursor()
+                    cur.execute("UPDATE USERS SET pass = %s WHERE login = %s", [newhesh_pass, session['user']])
+                    mysql.connection.commit()
+                    cur.close()
         return redirect(url_for('profile'))
     return redirect(url_for('log'))
 
 
-@app.route('/profile/del',methods = ['POST'])
+@app.route('/profile/questdata/<int:questcode>', methods=['GET'])
+def playersquest(questcode):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT player FROM PROGRESS WHERE quest = %s", [questcode])
+    res = cur.fetchall()
+
+    result = []
+    for row in res:
+        result.append({'login': row[0]})
+
+    return jsonify(result)
+
+
+@app.route('/profile/del', methods=['POST'])
 def delprofile():
     if g.user:
         if request.method == 'POST':
@@ -120,8 +163,9 @@ def create(qcount):
             return redirect(url_for('log'))
     return redirect(url_for('log'))
 
+
 @app.route('/create/send', methods=['POST'])
-def process_json():
+def create_zend():
     JSONdata = request.get_json()  # извлечение JSON данных из тела запроса
     data = json.loads(JSONdata)
     inf = data[0]
@@ -132,25 +176,122 @@ def process_json():
     # print(inf['q_disc'])
     # print(session['user'])
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO QUESTS (title,disc,autor) VALUES (%s,%s,%s)", [inf['q_name'],inf['q_disc'], session['user']])
+    cur.execute("INSERT INTO QUESTS (title,disc,autor) VALUES (%s,%s,%s)",
+                [inf['q_name'], inf['q_disc'], session['user']])
     mysql.connection.commit()
     last_inserted_id = cur.lastrowid
     cur.close()
-    # print(last_inserted_id)
+    # print(lastcreate)
 
     for d in data:
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO QUESTIONS  (q_text,q_answer,q_hint,q_pic,room,quest) VALUES (%s, %s,%s, %s,%s, %s)", (d["q_text"], d["q_answer"], d["q_hint"], d["q_pic"], d["room"], last_inserted_id))
+        cur.execute("INSERT INTO QUESTIONS  (q_text,q_answer,q_hint,q_pic,quest) VALUES (%s, %s,%s, %s, %s)",
+                    (d["q_text"], d["q_answer"], d["q_hint"], d["q_pic"], last_inserted_id))
         mysql.connection.commit()
         cur.close()
 
     return "Done"
 
 
+@app.route('/create/sendedit', methods=['POST'])
+def create_edit():
+    JSONdata = request.get_json()  # извлечение JSON данных из тела запроса
+    data = json.loads(JSONdata)
+    inf = data[0]
+    data.pop(0)
+    print(inf)
+    print(data)
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE QUESTS SET title = %s, disc = %s WHERE quest_id = %s",
+                [inf['q_name'], inf['q_disc'], inf['q_id']])
+    mysql.connection.commit()
+    for d in data:
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE QUESTIONS SET q_text = %s, q_answer = %s, q_hint = %s,q_pic = %s WHERE question_id = %s",
+                    [d['q_text'], d['q_answer'], d['q_hint'], d['q_pic'], d['id']])
+        mysql.connection.commit()
+        cur.close()
+
+    return "Done"
+
 
 @app.route('/quest')
 def quest():
-    return render_template('quest.html')
+    if g.user:
+        return render_template('quest.html')
+    return redirect(url_for('log'))
+
+
+@app.route('/create/edit/<string:qcount>/<int:questcode>')
+def questedit(qcount, questcode):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM QUESTIONS,QUESTS WHERE QUESTIONS.quest = QUESTS.quest_id AND quest = %s", [questcode])
+    res = cur.fetchall()
+
+    result_array = []
+
+    for row in res:
+        row_array = list(row)
+        result_array.append(row_array)
+
+    if g.user == res[0][9] and (qcount == '16' or qcount == '24' or qcount == '32'):
+        return render_template('edit.html', count=qcount, qdata=result_array, code=questcode)
+    return redirect(url_for('log'))
+
+
+# @app.route('/create/edit/data/<int:questcode>', methods=['GET'])
+# def editdata(questcode):
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM QUESTIONS,QUESTS WHERE QUESTIONS.quest = QUESTS.quest_id AND quest = %s", [questcode])
+#     res = cur.fetchall()
+#
+#
+#     result = []
+#     for row in res:
+#         result.append({
+#             'question_id': row[0],
+#             'text': row[1],
+#             'ans': row[2],
+#             'hint': row[3],
+#             'pic': row[4],
+#             'room': row[5],
+#             'quest': row[6],
+#             'title': row[8],
+#             'disc': row[9],
+#             'autor': row[10]
+#         })
+#
+#     return jsonify(result)
+
+
+@app.route('/dropsession')
+def dropsession():
+    session.pop('user', None)
+    return redirect(url_for('log'))
+
+
+@app.route('/userlogged')
+def userloginned():
+    user = session['user']
+    return jsonify(user)
+
+
+@app.route('/winquest/<int:questcode>/')
+def winquest(questcode):
+    if g.user:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM PROGRESS WHERE player = %s AND quest = %s", (session['user'], questcode))
+        res = cur.fetchone()
+        if res:
+            return redirect(url_for('profile'))
+        else:
+            cur.execute("INSERT INTO PROGRESS (quest,player) VALUES (%s,%s)",
+                        (questcode, session['user']))
+            mysql.connection.commit()
+            cur.close()
+            return redirect(url_for('profile'))
+    return redirect(url_for('log'))
+
 
 @app.before_request
 def before_request():
@@ -158,11 +299,32 @@ def before_request():
     if 'user' in session:
         g.user = session['user']
 
-@app.route('/dropsession')
-def dropsession():
-    session.pop('user',None)
-    return redirect(url_for('log'))
+
+@app.route('/proxy', methods=['GET'])
+def proxy():
+    # Получение URL изображения из параметра запроса
+    image_url = request.args.get('url')
+
+    if not image_url:
+        return Response('URL parameter is missing', status=400)
+
+    # Запрос изображения по указанному URL
+    response = requests.get(image_url)
+
+    # Проверка успешности запроса изображения
+    if response.status_code == 200:
+        # Установка заголовков CORS
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+
+        # Отправка ответа с изображением и заголовками CORS
+        return Response(response.content, headers=headers, content_type=response.headers['Content-Type'])
+    else:
+        return Response(f'Failed to fetch image: {response.status_code}', status=400)
 
 
 if __name__ == "__main__":
-        app.run(debug=True)
+    app.run(debug=True)

@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!--Оформление заднего фона-->
     <div class="globalBackground">
         <svg height="800" width="1600" style="position: absolute; left: 1100;">
@@ -98,7 +99,7 @@
                 <!--Созданные-->
                 <div class="sidebarSection" style="top: 172px;">
                     <a onclick="openSection('made')">Созданные квесты</a>
-                    <img src="{{ url_for('static',filename = 'images/addicon.png')}}" onclick="openSection('made')">
+<!--                    <img src="{{ url_for('static',filename = 'images/addicon.png')}}" onclick="openSection('made')">-->
                 </div>
 
                 <!--Выход-->
@@ -130,21 +131,25 @@
                             </div>
                         </div>
 
-    <!--                    <div class="editSection">-->
-    <!--                        <div>-->
-    <!--                            <h3>Секретный вопрос</h3>-->
-    <!--                            <select name="securityQuestion[]">-->
-    <!--                                <option value="" disabled selected>Секретный вопрос</option>-->
-    <!--                                <option value="1">Вопрос 1</option>-->
-    <!--                                <option value="2">Вопрос 2</option>-->
-    <!--                                <option value="3">Вопрос 3</option>-->
-    <!--                            </select>-->
-    <!--                        </div>-->
-    <!--                        <div>-->
-    <!--                            <h3>Ответ на секретный вопрос</h3>-->
-    <!--                            <input type="text" name="securityAnswer" placeholder="************"></input>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
+                        <div class="editSection">
+<!--                            <div>-->
+<!--                                <h3>Секретный вопрос</h3>-->
+<!--                                <select name="securityQuestion[]">-->
+<!--                                    <option value="" disabled selected>Секретный вопрос</option>-->
+<!--                                    <option value="1">Вопрос 1</option>-->
+<!--                                    <option value="2">Вопрос 2</option>-->
+<!--                                    <option value="3">Вопрос 3</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+                            <div>
+                                <h3>Секретный вопрос</h3>
+                                <input type="text" placeholder= "{{data[3]}}" readonly></input>
+                            </div>
+                            <div>
+                                <h3>Ответ на секретный вопрос</h3>
+                                <input type="text" name="securityAnswer" placeholder="************"></input>
+                            </div>
+                        </div>
 
                         <div class="editSection" style="margin-top: 64px">
                             <div style="display: flex; align-items: center;">
@@ -161,56 +166,53 @@
 
                 <!--Пройденные квесты-->
                 <div id="passed">
+                    {% for el in qprog|reverse %}
+                    <div id="listEntry">
+                            <h2 id="EndCodeQuest" style="color: #9A5BFF">{{el[0]}}</h2>
+                            <a id="passedEntryName" style="margin-left: 15px">{{el[1]}}</a>
+                    </div>
+                    {% endfor %}
+
                     <div id="listEntry">
                         <a id="passedEntryName">Квест "номер 1"</a>
                     </div>
 
-                    <div id="listEntry">
-                        <a id="passedEntryName">Квест "номер 2"</a>
-                    </div>
 
-                    <div id="listEntry">
-                        <a id="passedEntryName">Квест "номер 3"</a>
-                    </div>
-
-
-                    <div id="listEntry">
-                        <a id="passedEntryName">Квест "номер 3"</a>
-                    </div>
-
-                    <div id="listEntry">
-                        <a id="passedEntryName">Квест "номер 4"</a>
-                    </div>
-
-                    <div id="listEntry">
-                        <a id="passedEntryName">Квест "номер 5"</a>
-                    </div>
                 </div>
 
-                <div id="made">
+                <div id="made" >
                     <div id="listEntry">
-                        <a id="madeEntryName">Квест "номер 2"</a>
+                        <h2 id="CodeQuest" style="color: #9A5BFF">12</h2>
+                        <a id="madeEntryName" style="margin-left: 15px">Квест "номер 2"</a>
                         <div style="display: flex; align-items: center; margin-left: auto; width: fit-content">
                             <img src="{{ url_for('static',filename = 'images/participantsicon.png')}}" onclick="openSection('participants')">
-                            <img src="{{ url_for('static',filename = 'images/editquesticon.png')}}" onclick="openCreate()">
+                            <img src="{{ url_for('static',filename = 'images/editquesticon.png')}}" onclick="">
                             <img src="{{ url_for('static',filename = 'images/deleteicon.png')}}">
                         </div>
                     </div>
 
-                    <div id="listEntry">
-                        <a id="madeEntryName">Квест "номер 2"</a>
-                        <div style="display: flex; align-items: center; margin-left: auto; width: fit-content">
-                            <img src="{{ url_for('static',filename = 'images/participantsicon.png')}}" onclick="openSection('participants')">
-                            <img src="{{ url_for('static',filename = 'images/editquesticon.png')}}" onclick="openCreate()">
-                            <img src="{{ url_for('static',filename = 'images/deleteicon.png')}}">
+
+                    {% for el in lquests|reverse %}
+                        <div id="listEntry">
+                            <h2 id="CodeQuest" style="color: #9A5BFF">{{el[0]}}</h2>
+                            <a id="madeEntryName" style="margin-left: 15px">{{el[1]}}</a>
+                            <div style="display: flex; align-items: center; margin-left: auto; width: fit-content">
+                                <img src="{{ url_for('static',filename = 'images/participantsicon.png')}}" onclick="openSection('participants');players('{{el[0]}}')">
+                                <img src="{{ url_for('static',filename = 'images/editquesticon.png')}}" onclick="window.location = 'http://127.0.0.1:5000/create/edit/' + '{{el[2]}}' + '/' + '{{el[0]}}'">
+                                <img src="{{ url_for('static',filename = 'images/deleteicon.png')}}" onclick="delQuest('{{el[0]}}')">
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
+
+
                 </div>
 
                 <div id="participants">
+
                     <div id="listEntry">
                         <a id="passedEntryName">Пользователь "номер 1"</a>
                     </div>
+
                     <div id="listEntry">
                         <a id="passedEntryName">Пользователь "номер 2"</a>
                     </div>
@@ -239,8 +241,27 @@
         </div>
     </div>
 
+    <div>{{ new_quest }}</div>
+    <div id="QuestConfirmation">
+            <form method="post" action="/profile/del">
+                <h2 style="color: black; font-weight: 100; font-size: 2.5vh; margin-top: 7.5vh">Вы уверены, что хотите
+                    удалить
+                    аккаунт?</h2>
+
+                <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
+                    <button type="submit"
+                        style="display: inline; width: 12vw; height: 5vh; font-size: 2.5vh; background: #f0efef; color: black; box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); border-radius: 3vh; padding: 0 0"
+                        onclick="window.location = 'http://127.0.0.1:5000/profile/del'">Удалить
+                        аккаунт</button>
+                    <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!--Затенение фона-->
     <div id="blurBg" onclick="closeMenu()"></div>
+    <div id="create_data" new_quest={{ newdata }} style="display: none;">{{ newdata }}</div>
 </body>
 
 </html>

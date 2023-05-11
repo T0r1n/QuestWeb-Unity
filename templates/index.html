@@ -126,6 +126,7 @@
                         <br>
                         поднять настроение.
                     </p>
+                    <button style="width: 170px; height: 46px;" onclick="window.location = 'http://127.0.0.1:5000/quest'">Войти в квест</button>
                 </div>
             </div>
         </div>
@@ -190,10 +191,9 @@
 
                     <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Секретный вопрос</h2>
                     <select name="securityQuestion[]">
-                        <option value="" disabled selected>Выберите секретный вопрос</option>
-                        <option value="1">Вопрос 1</option>
-                        <option value="2">Вопрос 2</option>
-                        <option value="3">Вопрос 3</option>
+                        <option value="Какая кличка вашего животного?">Какая кличка вашего животного?</option>
+                        <option value="Какой ваш любимый фильм?">Какой ваш любимый фильм?</option>
+                        <option value="Какой цвет глаз вашего отца?">Какой цвет глаз вашего отца?</option>
                     </select>
 
                     <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Ответ на секретный вопрос</h2>
@@ -207,6 +207,7 @@
         </div>
     </div>
     <div id="my-data" loginuser={{ my_variable }} style="display: none;"></div>
+
 </body>
 
 </html>
