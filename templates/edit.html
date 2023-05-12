@@ -11,16 +11,10 @@
 </head>
 
 <body>
-<div id="data" qcount={{ count }} style="display: none;"></div>
+<!--<div id="data" qcount={{ count }} style="display: none;"></div>-->
 <script>var QCODE = "{{ code }}";
     var qdata = {{ qdata|safe }};
-
-
-
-
-
-
-
+    var qcount = "{{ count }}";
 
 </script>
 <script src="{{ url_for('static',filename = 'scripts/editinteract.js')}}"></script>

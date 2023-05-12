@@ -116,14 +116,14 @@
                         <div class="editSection">
                             <div>
                                 <h3>Ник</h3>
-                                <input type="text" name="newnickname" placeholder={{data[2]}} ></input>
+                                <input type="text" name="newnickname" placeholder="{{data[2]}}" ></input>
                             </div>
                         </div>
 
                         <div class="editSection">
                             <div>
                                 <h3>Логин</h3>
-                                <input type="text" name="login" placeholder={{data[0]}} readonly></input>
+                                <input type="text" name="login" placeholder="{{data[0]}}" readonly></input>
                             </div>
                             <div>
                                 <h3>Пароль</h3>
@@ -241,7 +241,6 @@
         </div>
     </div>
 
-    <div>{{ new_quest }}</div>
     <div id="QuestConfirmation">
             <form method="post" action="/profile/del">
                 <h2 style="color: black; font-weight: 100; font-size: 2.5vh; margin-top: 7.5vh">Вы уверены, что хотите
@@ -261,7 +260,7 @@
 
     <!--Затенение фона-->
     <div id="blurBg" onclick="closeMenu()"></div>
-    <div id="create_data" new_quest={{ newdata }} style="display: none;">{{ newdata }}</div>
+<!--    <div id="create_data" new_quest={{ newdata }} style="display: none;">{{ newdata }}</div>-->
 </body>
 
 </html>

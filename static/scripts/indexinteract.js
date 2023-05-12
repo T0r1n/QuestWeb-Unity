@@ -40,8 +40,7 @@ function resetQuestSelection() {
 function clickOnProfile() {
     // если пользователь кликает на иконку профиля, то проверяется, вошел ли он в систему
     // если нет, то открыть меню входа
-
-    var loginuser = document.getElementById('my-data').getAttribute('loginuser');
+//    var loginuser = document.getElementById('my-data').getAttribute('loginuser');
     if (loginuser !== 'None'){
         window.location = 'http://127.0.0.1:5000/profile'
     }

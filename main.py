@@ -133,12 +133,12 @@ def editprofile():
 @app.route('/profile/questdata/<int:questcode>', methods=['GET'])
 def playersquest(questcode):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT player FROM PROGRESS WHERE quest = %s", [questcode])
+    cur.execute("SELECT nick FROM PROGRESS,USERS WHERE PROGRESS.player = USERS.login and quest = %s", [questcode])
     res = cur.fetchall()
 
     result = []
     for row in res:
-        result.append({'login': row[0]})
+        result.append({'nick': row[0]})
 
     return jsonify(result)
 
@@ -239,31 +239,6 @@ def questedit(qcount, questcode):
     return redirect(url_for('log'))
 
 
-# @app.route('/create/edit/data/<int:questcode>', methods=['GET'])
-# def editdata(questcode):
-#     cur = mysql.connection.cursor()
-#     cur.execute("SELECT * FROM QUESTIONS,QUESTS WHERE QUESTIONS.quest = QUESTS.quest_id AND quest = %s", [questcode])
-#     res = cur.fetchall()
-#
-#
-#     result = []
-#     for row in res:
-#         result.append({
-#             'question_id': row[0],
-#             'text': row[1],
-#             'ans': row[2],
-#             'hint': row[3],
-#             'pic': row[4],
-#             'room': row[5],
-#             'quest': row[6],
-#             'title': row[8],
-#             'disc': row[9],
-#             'autor': row[10]
-#         })
-#
-#     return jsonify(result)
-
-
 @app.route('/dropsession')
 def dropsession():
     session.pop('user', None)
@@ -276,9 +251,14 @@ def userloginned():
     return jsonify(user)
 
 
-@app.route('/winquest/<int:questcode>/')
+auth_token = "05dcaa6d-5d71-4f98-a080-5d6841ee6eba"
+
+
+@app.route('/winquest/<int:questcode>/', methods=['GET'])
 def winquest(questcode):
-    if g.user:
+    print("Открыл страницу")
+    client_token = request.headers.get('Authorization')
+    if client_token == auth_token:
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM PROGRESS WHERE player = %s AND quest = %s", (session['user'], questcode))
         res = cur.fetchone()
@@ -289,8 +269,10 @@ def winquest(questcode):
                         (questcode, session['user']))
             mysql.connection.commit()
             cur.close()
+            print("Запись была добавлена.")
             return redirect(url_for('profile'))
-    return redirect(url_for('log'))
+    else:
+        return "Доступ запрещен"
 
 
 @app.before_request

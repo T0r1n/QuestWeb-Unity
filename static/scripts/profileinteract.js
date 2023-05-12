@@ -95,7 +95,7 @@ function players(code){
                 div.id = 'listEntry';
                 var anchor = document.createElement('a');
                 anchor.id = 'passedEntryName';
-                anchor.textContent = "Пользователь " + item.login;
+                anchor.textContent = "Пользователь " + item.nick;
                 div.appendChild(anchor);
                 container.appendChild(div);
             }

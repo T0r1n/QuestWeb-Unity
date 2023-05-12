@@ -1,13 +1,10 @@
 
-// function save(qdataValue){
-//     console.log(qdataValue)
-// }
 
-let taskCount = document.getElementById('data').getAttribute('qcount');
-taskCount = Number(taskCount)
+//let taskCount = document.getElementById('data').getAttribute('qcount');
+//taskCount = Number(taskCount)
+let taskCount = Number(qcount);
 //console.log(taskCount);
-//let taskCount = 16
-//let taskCount = 32 // условное число заданий, оно должно поступать с сервера(?) при запросе пользователя на создание квеста
+
 
 
 let activeTask = 1// выбранное задание, по умолчанию - первое

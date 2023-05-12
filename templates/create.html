@@ -11,7 +11,8 @@
 </head>
 
 <body>
-<div id="data" qcount={{ count }} style="display: none;"></div>
+<!--<div id="data" qcount={{ count }} style="display: none;"></div>-->
+<script>var qcount = "{{ count }}"</script>
 <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
 <!--Оформление заднего фона-->
 <div class="globalBackground">
