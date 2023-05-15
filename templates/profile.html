@@ -173,24 +173,11 @@
                     </div>
                     {% endfor %}
 
-                    <div id="listEntry">
-                        <a id="passedEntryName">Квест "номер 1"</a>
-                    </div>
 
 
                 </div>
 
                 <div id="made" >
-                    <div id="listEntry">
-                        <h2 id="CodeQuest" style="color: #9A5BFF">12</h2>
-                        <a id="madeEntryName" style="margin-left: 15px">Квест "номер 2"</a>
-                        <div style="display: flex; align-items: center; margin-left: auto; width: fit-content">
-                            <img src="{{ url_for('static',filename = 'images/participantsicon.png')}}" onclick="openSection('participants')">
-                            <img src="{{ url_for('static',filename = 'images/editquesticon.png')}}" onclick="">
-                            <img src="{{ url_for('static',filename = 'images/deleteicon.png')}}">
-                        </div>
-                    </div>
-
 
                     {% for el in lquests|reverse %}
                         <div id="listEntry">

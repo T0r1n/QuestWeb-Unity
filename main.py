@@ -256,7 +256,6 @@ auth_token = "05dcaa6d-5d71-4f98-a080-5d6841ee6eba"
 
 @app.route('/winquest/<int:questcode>/', methods=['GET'])
 def winquest(questcode):
-    print("Открыл страницу")
     client_token = request.headers.get('Authorization')
     if client_token == auth_token:
         cur = mysql.connection.cursor()
@@ -269,7 +268,6 @@ def winquest(questcode):
                         (questcode, session['user']))
             mysql.connection.commit()
             cur.close()
-            print("Запись была добавлена.")
             return redirect(url_for('profile'))
     else:
         return "Доступ запрещен"
