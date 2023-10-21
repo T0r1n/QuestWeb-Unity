@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -93,24 +95,50 @@
             <h4 style="font-weight: 100;">Выбери количество комнат</h4>
 
             <div id="questSizePicker">
-                <img src="{{ url_for('static',filename = 'images/qsize1.png')}}" class="questSize"
-                     style="position: relative; left: 48px; z-index: 0"
-                     onmouseenter="selectQuest(0)" onmouseleave="resetQuestSelection()"
-                     onclick="window.location = 'http://127.0.0.1:5000/create/16'">
-                <img src="{{ url_for('static',filename = 'images/qsize2.png')}}" class="questSize"
-                     style="position: relative; width: 208px; height: 280px; z-index: 1"
-                     onmouseenter="selectQuest(1)" onmouseleave="resetQuestSelection()"
-                     onclick="window.location = 'http://127.0.0.1:5000/create/24'">
-                <img src="{{ url_for('static',filename = 'images/qsize3.png')}}" class="questSize"
-                     style="position: relative; left: -48px; z-index: 0"
-                     onmouseenter="selectQuest(2)" onmouseleave="resetQuestSelection()"
-                     onclick="window.location = 'http://127.0.0.1:5000/create/32'">
-            </div>
+                <div class="house" id="house" data-rooms="6">
+                    <div class="house-wings" data-flip-key="wings">
+                      <div class="house-left-wing">
+                        <div class="house-window"></div>
+                        <div class="house-window"></div>
+                        <div class="house-sparkle">
+                          <div class="house-sparkle-dots"></div>
+                        </div>
+                      </div>
+                      <div class="house-right-wing">      
+                        <div class="house-window"></div>
+                        <div class="house-window"></div>
+                        <div class="house-sparkle">
+                          <div class="house-sparkle-dots"></div>
+                        </div>
+                      </div>
+                      <div class="house-roof">
+                        <div class="house-ledge"></div>
+                      </div>
+                    </div>
+                    <div class="house-front" data-flip-key="front">
+                      <div class="house-chimney"></div>
+                      <div class="house-facade"></div>
+                      <div class="house-window">
+                        <div class="house-sparkle">
+                          <div class="house-sparkle-dots"></div>
+                        </div>
+                      </div>
+                      <div class="house-doorway">
+                        <div class="house-stairs"></div>
+                        <div class="house-door"></div>
+                      </div>
+                      <div class="house-gable">      
+                        <div class="house-roof">
+                          <div class="house-ledge"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <label class="house-label" for="range" id="label">Rooms</label>
+                  <input type="range" min="1" max="8" step="1" value="8" id="range">
+                <button>Создать квест</button>
 
-            <div id="pickIndicator">
-                <input type="radio" disabled>
-                <input type="radio" checked>
-                <input type="radio" disabled>
             </div>
         </div>
 
@@ -219,6 +247,38 @@
 </div>
 <!--<div id="my-data" loginuser={{ my_variable }} style="display: none;"></div>-->
 <script>var loginuser= "{{ my_variable }}";</script>
+<script  src="https://unpkg.com/rxjs@6.5.3/bundles/rxjs.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js"></script>
+<script src="https://unpkg.com/flipping@0.5.3/dist/flipping.animationFrame.js"></script>
+<script>
+
+    
+    const { fromEvent } = rxjs;
+    const { map, startWith } = rxjs.operators;
+    
+    const house = document.querySelector('#house');
+    const range = document.querySelector('#range');
+    const label = document.querySelector('#label');
+    
+    const f = new Flipping();
+    const update = f.wrap(rooms => {
+      const prevRooms = house.getAttribute('data-rooms');
+      house.setAttribute('data-prev-rooms', prevRooms);
+      house.setAttribute('data-rooms', rooms);
+      
+      label.setAttribute('data-prev-rooms', prevRooms);
+      label.setAttribute('data-rooms', rooms);
+      label.setAttribute('data-rooms-delta', rooms - prevRooms);
+    });
+    
+    const range$ = fromEvent(range, 'input')
+      .pipe(
+        map(e => e.target.value),
+        startWith(8));
+    
+    range$.subscribe(update);
+    
+    </script>
 </body>
 
 </html>
