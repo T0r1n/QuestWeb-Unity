@@ -9,8 +9,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from UserLogin import UserLogin
 from flask_cors import CORS
 
-kjhhdkajsdkasdhs
-
 login_manager = LoginManager()
 app = Flask(__name__)
 CORS(app)
