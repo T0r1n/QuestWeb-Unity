@@ -106,4 +106,5 @@ function players(code){
           }
 
     });
+
 }
