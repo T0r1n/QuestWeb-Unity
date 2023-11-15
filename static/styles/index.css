@@ -1,3 +1,5 @@
+
+
 #questSizePicker {
     display: flex;
     align-items: center;
@@ -22,7 +24,7 @@
 #description {
     position: relative;
     width: 100%;
-    margin: 400px auto 0 auto;
+    margin: 350px auto 0 auto;
     text-align: center;
 }
 
@@ -49,15 +51,74 @@
     top: 0;
     width: 38%;
     height: 100%;
-    background: linear-gradient(120.59deg, #8C45FF 8.53%, #8DDBDB 88.61%);
+    background: white;
+    /*background: linear-gradient(120.59deg, #8C45FF 8.53%, #8DDBDB 88.61%);*/
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
     display: none;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 50px;
+    align-items: center;
 }
 
+
 .authForm {
-    position: relative;
-    width: 22vw;
-    margin: 32vh 0 0 5vw;
+  margin: 0 20% 0 20%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+
+.form-fields{
+  width:100%;
+  border-radius: 25px; 
+  background: linear-gradient(96.78deg, rgba(87, 74, 232, 0.2) 14.39%,
+  rgba(173, 80, 231, 0.2) 35.77%,
+  rgba(207, 55, 228, 0.2) 59.68%,
+  rgba(222, 178, 235, 0.2) 80.55%),
+linear-gradient(0deg, rgba(218, 194, 235, 1),rgba(218, 194, 235, 1));
+box-shadow: 0px 0px 50px 0px rgba(73, 45, 95, 0.6);
+
+  
+}
+.form-fields-wrapper{
+  margin: 8% 10% 8% 10%;
+}
+.form-fields-item{
+  width: 100%;
+}
+.form-fields-wrapper h2{
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  color: #000;
+}
+.formSignInWrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.formSignInWrapper h2{
+  color: #000;
+}
+.btn-log{
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(to right,#B5E4E2, #D59FE8);
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  margin:0 25% 0 25%;
+  padding: 14px 15px;
+  box-shadow: 0px 0px 14px 0px rgba(150, 171, 227, 0.5);
+  margin: 4.5vh auto 0 auto;
+}
+
+#forgottenPass{
+  color: #000;
 }
 
 .authForm a {
@@ -65,15 +126,20 @@
 }
 
 .authForm input, select {
-    width: 100%;
-    height: 3.5vh;
-    font-size: 2vh;
+    font-weight: 500;
+    font-size: 16px;
+    height: 38px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding-left:15px;
 }
 
 .authSwitch {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     font-size: 2vh;
+
 }
 
 #authSignin {
@@ -88,6 +154,16 @@
     display: none;
 }
 
+@media screen and (max-width:1400px) {
+  .authForm{
+    margin: 0 15% 0 15%;
+  }
+}
+@media screen and (max-width:1200px) {
+  .authForm{
+    margin: 0 5% 0 5%;
+  }
+}
 #range{
     background: none;
 }
@@ -2777,34 +2853,34 @@
   }
   
   /* line 799, ../../../Desktop/index-scss.scss */
-  [type='range'] {
+  #range {
     -webkit-appearance: none;
     margin: 20px 0;
     width: 330px;
   }
   
   /* line 804, ../../../Desktop/index-scss.scss */
-  [type='range']:focus {
+  #range:focus {
     outline: 0;
   }
   
   /* line 807, ../../../Desktop/index-scss.scss */
-  [type='range']:focus::-webkit-slider-runnable-track {
+  #range:focus::-webkit-slider-runnable-track {
     background: linear-gradient(to bottom, #79AAFF, #79AAFF 49.9%, #609aff 50%, #609aff 100%);
   }
   
   /* line 811, ../../../Desktop/index-scss.scss */
-  [type='range']:focus::-ms-fill-lower {
+  #range:focus::-ms-fill-lower {
     background: linear-gradient(to bottom, #79AAFF, #79AAFF 49.9%, #609aff 50%, #609aff 100%);
   }
   
   /* line 815, ../../../Desktop/index-scss.scss */
-  [type='range']:focus::-ms-fill-upper {
+  #range:focus::-ms-fill-upper {
     background: linear-gradient(to bottom, #79AAFF, #79AAFF 49.9%, #609aff 50%, #609aff 100%);
   }
   
   /* line 820, ../../../Desktop/index-scss.scss */
-  [type='range']::-webkit-slider-runnable-track {
+  #range::-webkit-slider-runnable-track {
     cursor: pointer;
     height: 25px;
     transition: all .2s ease;
@@ -2815,7 +2891,7 @@
   }
   
   /* line 827, ../../../Desktop/index-scss.scss */
-  [type='range']::-webkit-slider-thumb {
+  #range::-webkit-slider-thumb {
     background: #224889;
     border-radius: 20px;
     cursor: pointer;
@@ -2826,7 +2902,7 @@
   }
   
   /* line 833, ../../../Desktop/index-scss.scss */
-  [type='range']::-moz-range-track {
+  #range::-moz-range-track {
     cursor: pointer;
     height: 25px;
     transition: all .2s ease;
@@ -2837,7 +2913,7 @@
   }
   
   /* line 840, ../../../Desktop/index-scss.scss */
-  [type='range']::-moz-range-thumb {
+  #range::-moz-range-thumb {
     background: #224889;
     border-radius: 20px;
     cursor: pointer;
@@ -2846,7 +2922,7 @@
   }
   
   /* line 844, ../../../Desktop/index-scss.scss */
-  [type='range']::-ms-track {
+  #range::-ms-track {
     cursor: pointer;
     height: 25px;
     transition: all .2s ease;
@@ -2858,21 +2934,21 @@
   }
   
   /* line 852, ../../../Desktop/index-scss.scss */
-  [type='range']::-ms-fill-lower {
+  #range::-ms-fill-lower {
     background: linear-gradient(to bottom, #79AAFF, #79AAFF 49.9%, #609aff 50%, #609aff 100%);
     border: 5px solid #224889;
     border-radius: 50px;
   }
   
   /* line 858, ../../../Desktop/index-scss.scss */
-  [type='range']::-ms-fill-upper {
+  #range::-ms-fill-upper {
     background: linear-gradient(to bottom, #79AAFF, #79AAFF 49.9%, #609aff 50%, #609aff 100%);
     border: 5px solid #224889;
     border-radius: 50px;
   }
   
   /* line 864, ../../../Desktop/index-scss.scss */
-  [type='range']::-ms-thumb {
+  #range::-ms-thumb {
     background: #224889;
     border-radius: 20px;
     cursor: pointer;

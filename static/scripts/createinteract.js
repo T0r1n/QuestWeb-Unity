@@ -97,7 +97,11 @@ function clickedOnNext() {
     var pq_name = document.getElementById("questName");
     var pq_disc = document.getElementById("questDescription");
     if (VoidCheck() == true){
-        if (activeTask < taskCount) pickTask(parseInt(activeTask) + 1)
+        if (activeTask < taskCount){
+            pickTask(parseInt(activeTask) + 1)
+        }
+        
+        
         pq_disc.readOnly = true
         pq_name.readOnly = true
     }

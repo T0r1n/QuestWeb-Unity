@@ -52,7 +52,7 @@ function clickOnProfile() {
 
 function openAuth() {
     blurBg()
-    document.querySelector("#auth").style.display = "block"
+    document.querySelector("#auth").style.display = "flex"
 }
 
 function blurBg() {
@@ -71,14 +71,14 @@ function authSwitch(mode) {
         case 'in':
             document.querySelector("#authSignin").style.display = "block"
             document.querySelector("#authSignup").style.display = "none"
-            document.querySelector("#switchIn").style.color = "white"
+            document.querySelector("#switchIn").style.color = "black"
             document.querySelector("#switchUp").style.color = "gray"
             break
         case 'up':
             document.querySelector("#authSignin").style.display = "none"
             document.querySelector("#authSignup").style.display = "block"
             document.querySelector("#switchIn").style.color = "gray"
-            document.querySelector("#switchUp").style.color = "white"
+            document.querySelector("#switchUp").style.color = "black"
     }
 }
 

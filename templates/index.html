@@ -8,9 +8,15 @@
 
     <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/common.css')}}">
     <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/index.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 
     <script src="{{ url_for('static',filename = 'scripts/indexinteract.js')}}"></script>
     <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
+    
 </head>
 
 <body>
@@ -137,16 +143,17 @@
                   
                   <label class="house-label" for="range" id="label">Rooms</label>
                   <input type="range" min="1" max="8" step="1" value="8" id="range">
-                <button>Создать квест</button>
+                <button class="button-base-home createQuest">Создать квест</button>
 
             </div>
         </div>
-
+        
         <!--Вторая опция должна быть прозрачной с затенением на фоне, поэтому добавлена "подложка" в виде блока-->
         <!--Подключение к квесту-->
         <div
                 style="position: absolute; width: 684px; height: 495px; right: 0px; background-color: #010922; filter: blur(100px); border-radius: 15px; ">
         </div>
+        
         <div class="option" style="background: none; box-shadow: none; font-size: 20px;">
             <div style="padding: 96px 0 0 64px">
                 <h1 style="font-size: 64px;">K-quest</h1>
@@ -160,13 +167,36 @@
                     <br>
                     поднять настроение.
                 </p>
-                <button style="width: 170px; height: 46px;" onclick="window.location = 'http://127.0.0.1:5000/quest'">
+                <button class="button-base-home" style="width: 170px; height: 46px;" onclick="window.location = 'http://127.0.0.1:5000/quest'">
                     Войти в квест
                 </button>
             </div>
         </div>
     </div>
-
+    <div class="videoplayer">
+        <div class="player-wrapper">
+            <div class="play-btn-cont">
+                <video src="{{ url_for('static',filename = 'video.mp4')}}" id="Video1" muted autoplay preload="auto" loop  >
+                    
+                </video>
+                <button id="play" class="actions" onclick="vidplay()">
+                    <img id="iconBtnPl" src="{{ url_for('static',filename = 'images/play.svg')}}" >
+                    <img id="icon-btn-pause" src="{{ url_for('static',filename = 'images/pause.svg')}}" >
+                </button>
+                <div class="buttonBar-wrapper">  
+                    <div id="buttonbar">
+                        <input id="timelineVideo" type="range" step="0.0001" min="0" value="0" >
+                        <button id="VolButton">
+                            <img id="unmutedBtn" src="{{ url_for('static',filename = 'images/unmuted.svg')}}" alt="">
+                            <img id="mutedBtn" src="{{ url_for('static',filename = 'images/muted.svg')}}" alt="">
+                        </button>
+                        <input id="volInput" type="range" step="1" min="0" max="100" value="0">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
     <div id="description">
         <div class="descriptionContent">
             <h1 style="font-size: 48px">Описание</h1>
@@ -186,7 +216,7 @@
 <!--Сайдбар авторизации-->
 <div id="auth">
     <!--Декоративный эллипс-->
-    <svg viewBox="0 0 100 150" style="position: fixed; top: -10%;">
+    <!--<svg viewBox="0 0 100 150" style="position: fixed; top: -10%;">
         <defs>
             <linearGradient id="ellipseGrad6" x1="100.0%" y1="100%" x2="0%" y2="100%">
                 <stop offset="-63.06%" style="stop-color:rgba(125, 45, 255, 0.75); stop-opacity:1"/>
@@ -195,52 +225,63 @@
         </defs>
         <ellipse cx="30" cy="100" rx="100" ry="25" style="rotate: -30deg; filter: blur(20px);"
                  fill="url(#ellipseGrad6)"/>
-    </svg>
+    </svg>-->
 
     <!--Содержимое-->
     <div class="authForm">
+        
         <div class="authSwitch">
-            <a id="switchIn" onclick="authSwitch('in')">ВХОД</a>
+            <a id="switchIn" style="color:black" onclick="authSwitch('in')">ВХОД</a>
             <a style="color: gray" id="switchUp" onclick="authSwitch('up')">РЕГИСТРАЦИЯ</a>
         </div>
-
+        
+        
         <div id="authSignin">
             <form method="post" action="/">
-                <h2 style="font-weight: 100; font-size: 2.25vh; margin: 0 0 0.5vh 0">Логин</h2>
-                <input type="text" name="login" placeholder="Введите логин">
-                <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Пароль</h2>
-                <input type="password" name="password" placeholder="Введите пароль">
+                <div class="formSignInWrapper">
+                    <div class="form-fields">
+                        <div class="form-fields-wrapper">
+                            <h2 class="form-fields-item" >Логин</h2>
+                            <input class="form-fields-item" type="text" name="login" placeholder="Введите логин">
+                            <h2 class="form-fields-item" >Пароль</h2>
+                            <input class="form-fields-item" type="password" name="password" placeholder="Введите пароль">
 
-                <a style="display: block; width: fit-content; margin: 1vh auto 0 auto; font-size: 1.5vh">Забыли
-                    пароль?</a>
-                <button style="width: 7vw; height: 4vh; font-size: 2vh; border-radius: 0.75vh; margin: 2vh auto 0 auto"
-                        type="submit"
-                >ВОЙТИ
-                </button>
+                            <a id="forgottenPass" style="display: block; width: fit-content; margin: 1vh auto 0 auto; font-size: 1.5vh">Забыли
+                                пароль?</a>
+                        </div>
+                    </div>
+                    <button  class="btn-log" 
+                            type="submit"
+                    >ВОЙТИ В УРОК
+                    </button>
+                </div>
             </form>
         </div>
 
         <div id="authSignup">
             <form method="post" action="/reg">
-                <h2 style="font-weight: 100; font-size: 2.25vh; margin: 0 0 0.5vh 0">Логин</h2>
-                <input type="text" name="reglogin" placeholder="Введите логин">
-                <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Пароль</h2>
-                <input type="text" name="regpassword" placeholder="Введите пароль">
+                <div class="formSignInWrapper">
+                    <div class="form-fields">
+                        <div class="form-fields-wrapper">
+                            <h2 class="form-fields-item">Логин</h2>
+                            <input class="form-fields-item" type="text" name="reglogin" placeholder="Введите логин">
+                            <h2 class="form-fields-item">Пароль</h2>
+                            <input class="form-fields-item" type="text" name="regpassword" placeholder="Введите пароль">
 
-                <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Секретный вопрос</h2>
-                <select name="securityQuestion[]">
-                    <option value="Какая кличка вашего животного?">Какая кличка вашего животного?</option>
-                    <option value="Какой ваш любимый фильм?">Какой ваш любимый фильм?</option>
-                    <option value="Какой цвет глаз вашего отца?">Какой цвет глаз вашего отца?</option>
-                </select>
+                            <h2 class="form-fields-item">Секретный вопрос</h2>
+                            <select class="form-fields-item" name="securityQuestion[]">
+                                <option value="Какая кличка вашего животного?">Какая кличка вашего животного?</option>
+                                <option value="Какой ваш любимый фильм?">Какой ваш любимый фильм?</option>
+                                <option value="Какой цвет глаз вашего отца?">Какой цвет глаз вашего отца?</option>
+                            </select>
 
-                <h2 style="font-weight: 100; font-size: 2.25vh; margin: 3vh 0 0.5vh 0">Ответ на секретный вопрос</h2>
-                <input type="text" name="securityAnswer" placeholder="Введите ответ на вопрос">
-
-                <button
-                        style="width: 12.5vw; height: 4vh; font-size: 2vh; border-radius: 0.75vh; margin: 2vh auto 0 auto"
-                        onclick="openProfile()">ЗАРЕГИСТРИРОВАТЬСЯ
-                </button>
+                            <h2 class="form-fields-item">Ответ на секретный вопрос</h2>
+                            <input class="form-fields-item" type="text" name="securityAnswer" placeholder="Введите ответ на вопрос">
+                        </div>
+                    </div>
+                    <button class="btn-log" onclick="openProfile()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                </div>
+                
             </form>
         </div>
     </div>
@@ -250,6 +291,7 @@
 <script  src="https://unpkg.com/rxjs@6.5.3/bundles/rxjs.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js"></script>
 <script src="https://unpkg.com/flipping@0.5.3/dist/flipping.animationFrame.js"></script>
+
 <script>
 
     
@@ -278,7 +320,85 @@
     
     range$.subscribe(update);
     
+    
+    function vidplay() {
+       var video = document.getElementById("Video1");
+       
+       var button = document.getElementById("play");
+       if (video.paused) {
+          video.play();
+          var img_pl = document.querySelector("#iconBtnPl")
+          img_pl.style.display = 'none'
+          document.getElementById("icon-btn-pause").style.display = 'flex'
+          console.log(video.duration)
+       } else {
+          video.pause();
+          document.getElementById("icon-btn-pause").style.display = 'none'
+          var img_pl = document.querySelector("#iconBtnPl")
+          img_pl.style.display = 'flex'
+       }
+    }
+    
     </script>
+   
 </body>
 
 </html>
+<script>
+    window.onload = function(){
+        var video = document.getElementById("Video1");
+        document.querySelector("#timelineVideo").setAttribute("max", video.duration)
+        var range = document.querySelector("#timelineVideo")
+        video.addEventListener("timeupdate", function(event){
+            var pos = this.currentTime/this.duration;
+            range.value = pos*range.max
+        })
+        range.oninput = function(event){
+            video.pause()
+            video.currentTime = range.value/range.max * video.duration
+            vidplay()
+        }
+        var lastVolume = 0
+        var mute = true;
+        var VolRange = document.querySelector("#volInput");
+        VolRange.oninput = function(event){
+            video.volume = VolRange.value/100;
+            console.log(video.volume)
+            console.log(VolRange.value)
+            lastVolume = VolRange.value/100
+            if(lastVolume != 0){
+                mute = false
+                document.getElementById("mutedBtn").style.display = 'none'
+                document.getElementById("unmutedBtn").style.display = 'block'
+            }
+            else{
+                mute = true
+                document.getElementById("mutedBtn").style.display = 'block'
+                document.getElementById("unmutedBtn").style.display = 'none'
+                
+            }
+        } 
+        function updateMuteBtn(){
+            if(mute === true){
+                VolRange.value = lastVolume;
+
+                document.getElementById("mutedBtn").style.display = 'none'
+                document.getElementById("unmutedBtn").style.display = 'block'
+                video.volume = VolRange.value/100
+                mute = false
+            }
+            else{
+                lastVolume = VolRange.value
+                VolRange.value = 0
+                document.getElementById("mutedBtn").style.display = 'block'
+                document.getElementById("unmutedBtn").style.display = 'none'
+                mute = true
+            }
+        }
+        document.querySelector("#VolButton").onclick = function(event){
+            updateMuteBtn()
+        }
+    }
+
+    
+</script>
