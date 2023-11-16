@@ -176,7 +176,7 @@
     <div class="videoplayer">
         <div class="player-wrapper">
             <div class="play-btn-cont">
-                <video src="{{ url_for('static',filename = 'video.mp4')}}" id="Video1"  autoplay preload="auto" loop  >
+                <video src="{{ url_for('static',filename = 'video.mp4')}}" id="Video1"   preload="auto" loop  >
                     
                 </video>
                 <button id="play" class="actions" onclick="vidplay()">
@@ -348,6 +348,7 @@
     window.onload = function(){
         var video = document.getElementById("Video1");
         video.volume = 0;
+        video.play();
         document.querySelector("#timelineVideo").setAttribute("max", video.duration)
         var range = document.querySelector("#timelineVideo")
         video.addEventListener("timeupdate", function(event){
