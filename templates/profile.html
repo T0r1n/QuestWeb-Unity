@@ -155,11 +155,18 @@
 
                         <div class="editSection" style="margin-top: 64px">
                             <div style="display: flex; align-items: center;">
-                                <button onclick="window.location = 'http://127.0.0.1:5000/profile/edit'" id="btnUpdateProfile">
-                                    <img src="{{ url_for('static',filename = 'images/savechangesicon.png')}}" width="24" height="24">Сохранить
-                                    изменения</button>
-                                <a style="margin-left: 24px; font-size: 20px" onclick="openDeletionConfirmation()">Удалить
+                                
+                                <div class ="div-animd-btn-wrapper">
+                                    
+                                    <button class="animated-btn" onclick="window.location = 'http://127.0.0.1:5000/profile/edit'" id="btnUpdateProfile">
+                                        <img style="color:black;" src="{{ url_for('static',filename = 'images/savechangesicon.svg')}}" width="24" height="24">Сохранить
+                                        изменения</button>
+                                    <a style="margin-left: 24px; font-size: 20px; " onclick="openDeletionConfirmation()">Удалить
                                     аккаунт</a>
+                                </div>
+                                
+                                
+                                
                             </div>
                         </div>
                     </form>
@@ -241,7 +248,7 @@
                     аккаунт?</h2>
 
                 <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
-                    <button id="btnConfirmDelete" type="submit" onclick="window.location = 'http://127.0.0.1:5000/profile/del'">
+                    <button class="animated-btn" id="btnConfirmDelete" type="submit" onclick="window.location = 'http://127.0.0.1:5000/profile/del'">
                         Удалить аккаунт
                     </button>
                     <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>

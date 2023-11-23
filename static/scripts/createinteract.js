@@ -44,7 +44,7 @@ function generateTaskLine() {
 
         task.innerHTML = (i)
         task.setAttribute("id", i)
-        task.onclick = (e) => clickedOnTask(e)
+        //task.setAttribute("onClick", "clickedOnTask(event)")
 
         container.appendChild(task)
         tasks.appendChild(container)

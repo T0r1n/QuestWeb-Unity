@@ -152,16 +152,21 @@
                     <h3>Ответ</h3>
                     <textarea placeholder="Введите текст ответа" style="height: 108px" id="taskAnswer"
                             onchange="saveTaskData(); isFull()"></textarea>
-                    </div>
-                <button id="btn-NextExc" onclick="creatJSON();clickedOnNext();isFull()">ДАЛЕЕ
+                </div>
+                
+                <div id="btn-next-div">
+                    <div id="btn-next-wrapper">
+                        <button class="btn-template-anim" id="btn-NextExc" onclick="creatJSON();clickedOnNext();isFull()">ДАЛЕЕ
                 </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!--Главная кнопка страницы-->
     <div style="position: relative; width: 684px; top: -300px">
-        <button onclick="SendJSON();" id="createButton">Создать
+        <button onclick="SendJSON();" id="createButton" class="btn-template-anim">Создать
             квест
         </button>
     </div>

@@ -49,39 +49,89 @@ h3 {
     height: 100%;
     overflow: hidden;
 }
-#createButton{
-    margin: 0 auto; 
-    width: 200px; 
-    height: 50px; 
 
-    background: 
-linear-gradient(95.41deg, #a5eae7 20%, rgb(183 102 212) 84%);
-    background-size: 100%;
-    font-family: "Montserrat", sans-serif;
-    font-size: 18px;
-    box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); 
-    border-radius: 50px;
-    border:none;
-    display: none;
+#btn-next-div{
+  margin-top: 10px;
+  margin-bottom:80px;
+  display: flex;
+  justify-content: center;
 }
-
+#btn-next-wrapper{
+   
+  position: absolute;
+}
 #btn-NextExc{
-    padding: 8px 28px; 
-    margin: 0 auto 30px auto; 
-    background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-  background-size: 300%;
-    box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); 
-    border-radius: 20px;
-    border: none;
-    font-family: "Montserrat", sans-serif;
-    color: whitesmoke;
+    padding: 13px 40px; 
+}
+.btn-template-anim{
+  background: linear-gradient(90deg, #84f7e8 12%, #f96deb 88%);
+  border-radius: 20px;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  color:black;
+  position: relative;
+  z-index: 1;
+  background-size: 400% 150%;
+  cursor: pointer;
+}
+.btn-template-anim:hover{
+  animation: ani 6s linear infinite;
+  border: none;
 }
 
+@keyframes ani {
+  0% {
+    background-position: right center;
+  }
+
+  100% {
+    background-position: left center;
+  }
+}
+
+.btn-template-anim:before {
+  
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  /*background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);*/
+  background: linear-gradient(90deg, #84f7e8 12%, #f96deb 88%);
+
+  /*background-size: 400%;*/
+  border-radius: 35px;
+  transition: 1s;
+}
+
+.btn-template-anim:hover::before {
+  filter: blur(20px);
+}
+
+.btn-template-anim:active {
+  background: linear-gradient(90deg, #84f7e8 12%, #f96deb 88%);
+
+  /*background: linear-gradient(32deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);*/
+}
+#createButton{
+  margin: 0 auto; 
+  width: 200px; 
+  height: 50px; 
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.15); 
+  border-radius: 50px;
+  border:none;
+  display: none;
+}
 #option-wrapper{
     width:100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 .TextOnSwitch {
     display: flex;

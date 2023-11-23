@@ -9,8 +9,10 @@
     width: 1440px;
     height: 815px;
     margin-top: 64px;
-    background-color: orange;
-    background: linear-gradient(120.59deg, #8C45FF 8.53%, #8DDBDB 88.61%);
+    
+    background: linear-gradient(96.78deg, rgba(87, 74, 232, 0.2) 14.39%, rgba(173, 80, 231, 0.2) 35.77%, rgba(207, 55, 228, 0.2) 59.68%, rgba(222, 178, 235, 0.2) 80.55%),
+linear-gradient(0deg, #DAC2EB, #DAC2EB);
+
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     font-size: 18px;
@@ -116,7 +118,9 @@
     height: 27vh;
     left: calc(35vw);
     top: calc(36.5vh);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), linear-gradient(120.59deg, #8C45FF 8.53%, #8DDBDB 88.61%);
+    background: linear-gradient(0deg, #DAC2EB, #DAC2EB),
+linear-gradient(0deg, #E7E7E8, #E7E7E8);
+
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.25);
     border-radius: 2vh;
     text-align: center;
@@ -151,13 +155,15 @@
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    background: linear-gradient(90deg, #A5E4DC 10%, #EE9EE6 90%) ;
+    background: linear-gradient(90deg, #84f7e8 12%, #f96deb 88%);
     /*#f0efef*/ 
     color: black; 
     box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); 
     border-radius: 30px;
     border: none;
     font-family: "Montserrat", sans-serif;
+    background-size: 300%;
+    background-position-x: center;
 }
 #btnUpdateProfile img{
     padding-right: 2px;
@@ -167,11 +173,13 @@
     display: inline; 
     border: none; 
     font-size: 2.5vh; 
-    background: linear-gradient(90deg, #A5E4DC 10.22%, #EE9EE6 89.43%);
+    background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
     color: black; 
     box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); 
     border-radius: 3vh; 
     padding: 16px 32px;
+    background-size: 300%;
+    background-position-x: right;
 }
 #deletionConfirmation form{
     padding: 0 33px;
@@ -279,4 +287,54 @@
   }
   .copy:hover svg {
     color: var(--button-hover-text-color);
+  }
+
+  .div-animd-btn{
+
+  }
+  .animated-btn{
+    z-index:1;
+    position: relative;
+    background-size: 300%;
+    cursor:pointer;
+  }
+  .div-animd-btn-wrapper{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .animated-btn:hover{
+    animation: ani 7s linear infinite;
+    border: none;
+  }
+  .animated-btn:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
+    /*background-size: 400%;*/
+    border-radius: 35px;
+    transition: 1s;
+  }
+  .animated-btn:hover::before {
+    filter: blur(20px);
+  }
+  
+  .animated-btn:active {
+    background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
+;
+  }
+  @keyframes ani {
+    0% {
+      background-position: right center;
+    }
+  
+    100% {
+      background-position: left center;
+    }
   }

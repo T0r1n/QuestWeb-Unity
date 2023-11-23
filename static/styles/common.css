@@ -78,6 +78,28 @@ body {
   }
 }
 
+.button-base-home:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+  background-size: 400%;
+  border-radius: 35px;
+  transition: 1s;
+}
+
+.button-base-home:hover::before {
+  filter: blur(20px);
+}
+
+.button-base-home:active {
+  background: linear-gradient(32deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+}
+
 .wrapper {
     position: relative;
     width: 1440px;
@@ -135,31 +157,15 @@ body {
     width: 645px;
     height: 480px;
     border-radius: 15px;
-    background: linear-gradient(120.59deg, rgba(140, 69, 255, 0.7) 8.53%, rgba(141, 219, 219, 0.7) 88.61%);
+    background: linear-gradient(96.78deg, rgba(87, 74, 232, 0.2) 14.39%, rgba(173, 80, 231, 0.2) 35.77%, rgba(207, 55, 228, 0.2) 59.68%, rgba(222, 178, 235, 0.2) 80.55%),
+linear-gradient(0deg, #DAC2EB, #DAC2EB);
+
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
 }
 
-.button-base-home:before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  z-index: -1;
-  background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-  background-size: 400%;
-  border-radius: 35px;
-  transition: 1s;
-}
 
-.button-base-home:hover::before {
-  filter: blur(20px);
-}
 
-.button-base-home:active {
-  background: linear-gradient(32deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-}
+
 .videoplayer{
   margin: 188px 0 0 0;
     

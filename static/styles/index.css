@@ -104,9 +104,12 @@ box-shadow: 0px 0px 50px 0px rgba(73, 45, 95, 0.6);
   color: #000;
 }
 .btn-log{
-  border-radius: 14px;
+  border-radius: 20px;
   border: none;
-  background: linear-gradient(to right,#B5E4E2, #D59FE8);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+  linear-gradient(95.41deg, #aff9f6 13.65%, #cd78eb 88.97%);
+
+  background-size: 400% 150%;
   cursor: pointer;
   text-align: center;
   font-weight: 500;
@@ -115,6 +118,46 @@ box-shadow: 0px 0px 50px 0px rgba(73, 45, 95, 0.6);
   padding: 14px 15px;
   box-shadow: 0px 0px 14px 0px rgba(150, 171, 227, 0.5);
   margin: 4.5vh auto 0 auto;
+  z-index: 1;
+}
+
+
+.btn-log:hover{
+  animation: ani 6s linear infinite;
+  border: none;
+}
+@keyframes ani {
+  0% {
+    background-position: right center;
+  }
+
+  100% {
+    background-position: left center;
+  }
+}
+
+.btn-log:before{
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+  linear-gradient(95.41deg, #aff9f6 13.65%, #cd78eb 88.97%);
+  
+  border-radius: 35px;
+  transition: 1s;
+}
+.btn-log:hover::before {
+  filter: blur(20px);
+}
+
+.btn-log:active {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+  linear-gradient(95.41deg, #aff9f6 13.65%, #cd78eb 88.97%);
+;
 }
 
 #forgottenPass{
@@ -2957,4 +3000,7 @@ box-shadow: 0px 0px 50px 0px rgba(73, 45, 95, 0.6);
     margin-top: 0;
   }
   
+
+  
+
   /*# sourceMappingURL=index-scss.css.map */
