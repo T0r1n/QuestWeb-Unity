@@ -91,3 +91,84 @@ function openCreate() {
     // переход к созданию квеста
     location.replace('./create.html')
 }
+
+window.onload = function(){
+BackgroundParticles();
+BackgroundVideo();
+}
+
+function BackgroundParticles()  {
+var particles = Particles.init({
+  selector: ".background",
+  color: ["#03dac6", "#ff0266", "#000000"],
+  connectParticles: true,
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        color: ["#faebd7", "#03dac6", "#ff0266"],
+        maxParticles: 43,
+        connectParticles: false
+      }
+    }
+  ]
+});
+}
+
+function BackgroundVideo(){
+        var video = document.getElementById("Video1");
+        video.volume = 0;
+        video.play();
+        document.querySelector("#timelineVideo").setAttribute("max", video.duration)
+        var range = document.querySelector("#timelineVideo")
+        video.addEventListener("timeupdate", function(event){
+            var pos = this.currentTime/this.duration;
+            range.value = pos*range.max
+        })
+        range.oninput = function(event){
+            video.pause()
+            video.currentTime = range.value/range.max * video.duration
+            vidplay()
+        }
+        var lastVolume = 0
+        var mute = true;
+        var VolRange = document.querySelector("#volInput");
+        VolRange.oninput = function(event){
+            video.volume = VolRange.value/100;
+            console.log(video.volume)
+            console.log(VolRange.value)
+            lastVolume = VolRange.value/100
+            if(lastVolume != 0){
+                mute = false
+                document.getElementById("mutedBtn").style.display = 'none'
+                document.getElementById("unmutedBtn").style.display = 'block'
+            }
+            else{
+                mute = true
+                document.getElementById("mutedBtn").style.display = 'block'
+                document.getElementById("unmutedBtn").style.display = 'none'
+
+            }
+        }
+        function updateMuteBtn(){
+            if(mute === true){
+                VolRange.value = lastVolume;
+
+                document.getElementById("mutedBtn").style.display = 'none'
+                document.getElementById("unmutedBtn").style.display = 'block'
+                video.volume = VolRange.value/100
+                mute = false
+            }
+            else{
+                lastVolume = VolRange.value
+                VolRange.value = 0
+                document.getElementById("mutedBtn").style.display = 'block'
+                document.getElementById("unmutedBtn").style.display = 'none'
+                video.volume = 0
+                mute = true
+            }
+        }
+        document.querySelector("#VolButton").onclick = function(event){
+            updateMuteBtn()
+        }
+    }

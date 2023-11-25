@@ -10,72 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 
     <script src="{{ url_for('static',filename = 'scripts/profileinteract.js')}}"></script>
+    <script src="{{ url_for('static',filename = 'scripts/background.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!--Оформление заднего фона-->
-    <div class="globalBackground">
-        <svg height="800" width="1600" style="position: absolute; left: 1100;">
-            <defs>
-                <linearGradient id="ellipseGrad1" x1="26%" y1="10%" x2="97.85%" y2="50%">
-                    <stop offset="26%" style="stop-color:rgba(125, 45, 255, 0.8); stop-opacity:1" />
-                    <stop offset="97.85%" style="stop-color:rgb(0, 255, 71, 0.8); stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <ellipse cx="650" cy="0" rx="400px" ry="550px" fill="url(#ellipseGrad1)"
-                style="position: absolute; filter: blur(100px);" />
-        </svg>
-
-        <svg height="1250" width="1300" style="position: absolute; left: -400px; top: -50px;">
-            <defs>
-                <linearGradient id="ellipseGrad2" x1="17.32%" y1="25%" x2="76.79%" y2="100%">
-                    <stop offset="17.32%" style="stop-color:rgba(13, 255, 255, 0.75); stop-opacity:1" />
-                    <stop offset="76.79%" style="stop-color:rgb(0, 255, 71, 0.75); stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <ellipse cx="650" cy="600" rx="325px" ry="300px" fill="url(#ellipseGrad2)" style="filter: blur(150px);" />
-        </svg>
-
-        <svg height="1500" width="1600" style="position: absolute; left: 600px; top: 800px;">
-            <defs>
-                <linearGradient id="ellipseGrad3" x1="30%" y1="10%" x2="100%" y2="100%">
-                    <stop offset="25%" style="stop-color:rgba(107, 243, 248, 0.8); stop-opacity:1" />
-                    <stop offset="10%" style="stop-color:rgb(125, 45, 255, 0.44); stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <ellipse cx="900" cy="750" rx="400px" ry="400px" fill="url(#ellipseGrad3)" style="filter: blur(150px);" />
-        </svg>
-
-        <svg height="1700" width="2550" style="position: absolute; left: -1200px; top: 700px;">
-            <defs>
-                <linearGradient id="ellipseGrad4" x1="30%" y1="10%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:rgba(125, 45, 255, 0.75); stop-opacity:1" />
-                    <stop offset="10%" style="stop-color:rgb(0, 255, 71, 0.75); stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <ellipse cx="1300" cy="1000" rx="800px" ry="250px" fill="url(#ellipseGrad4)" style="filter: blur(150px);" />
-        </svg>
-    </div>
-
     <div class="wrapper">
         <!--Шапка-->
         <div class="header">
-            <!--Декоративный эллипс-->
-            <div style="position: absolute;">
-                <svg height="250" width="300"
-                    style="position: relative; transform: rotate(-60deg); left: -430px; top: -148px">
-                    <defs>
-                        <linearGradient id="ellipseGrad5" x1="100.0%" y1="100%" x2="0%" y2="100%">
-                            <stop offset="60.32%" style="stop-color:#0038FF; stop-opacity:1" />
-                            <stop offset="0.96%" style="stop-color:rgb(13, 240, 255, 0.83); stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <ellipse cx="50" cy="40" rx="25px" ry="14px" fill="url(#ellipseGrad5)"
-                        style="filter: blur(10px);" />
-                </svg>
-            </div>
-
             <!--Содержимое шапки-->
             <div class="headerContent">
                 <a style="margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
@@ -277,6 +222,8 @@
     <!--Затенение фона-->
     <div id="blurBg" onclick="closeMenu()"></div>
 <!--    <div id="create_data" new_quest={{ newdata }} style="display: none;">{{ newdata }}</div>-->
+    <canvas class="background" ></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
 </body>
 
 </html>
