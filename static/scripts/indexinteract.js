@@ -92,7 +92,7 @@ function openCreate() {
     location.replace('./create.html')
 }
 
-window.onload = function(){
+function StartPage(){
 BackgroundParticles();
 BackgroundVideo();
 }
@@ -172,3 +172,4 @@ function BackgroundVideo(){
             updateMuteBtn()
         }
     }
+
