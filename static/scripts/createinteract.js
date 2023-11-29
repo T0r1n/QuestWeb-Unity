@@ -22,60 +22,47 @@ function returnToIndex() {
 function generateTaskLine() {
     // создает очередь заданий нужного размера
     // !!! сейчас невозможно передать на эту страницу количество заданий, поэтому будет сгенерировано максимальное число - это условность;
-    let tasks = document.querySelector("#tasks")
-    
-    for (let i = 1; i <= taskCount; i++) {
-        let container = document.createElement("DIV")
-        let task = document.createElement("A")
+    let taskLine = document.querySelector("#taskLine")
 
-        container.style.display = "inline-block"
-        container.style.width = "fit-content"
+    const tasksPerRow = 14; // Количество заданий на одну строку
 
-        task.style.display = "flex"
-        task.style.justifyContent = "center"
-        task.style.alignItems = "center"
-        task.style.fontSize = "20px"
-        task.style.width = "40px"
-        task.style.height = "40px"
-        task.style.borderRadius = "25px"
-        task.style.color = "black"
-        
-        if (i != 1) task.style.marginLeft = "3.5px" // отступ для умещения ровно 12 заданий
+    let lines = taskCount / tasksPerRow; // Количество строк
+    for (let i = 0; i < lines; i++) {
+        let container = document.createElement("ul")
+        container.className = "taskList"
+        container.style.display = "flex"
 
-        task.innerHTML = (i)
-        task.setAttribute("id", i)
-        //task.setAttribute("onClick", "clickedOnTask(event)")
+        let tasks = Math.min((i + 1) * tasksPerRow, taskCount) // Количество заданий на этой строке
+        for (let j = i * tasksPerRow; j < tasks; j++) {
+            let node = document.createElement("li")
+            let task = document.createElement("a")
+            task.className = "task"
 
-        container.appendChild(task)
-        tasks.appendChild(container)
-    }
+            node.style.display = "inline-block"
+            node.style.width = "fit-content"
+            node.style.zIndex = taskCount - j;
+
+            if (j % tasksPerRow != 0) {
+                task.style.marginLeft = "-0.4em"
+            } else {
+                task.style.marginLeft = "-1.4em";
+            }
+
+            task.innerHTML = (j + 1)
+            //task.setAttribute("onClick", "clickedOnTask(event)")
+
+            node.appendChild(task)
+            container.append(node)
+        }
+
+        taskLine.appendChild(container)
+    } 
 
     pickTask(1) // первое задание выбрано изначально
 }
 
-function scrollTasks(x) {
-    // скроллит задания
-    // если x == -1, то влево; если x == 1, то вправо
-
-    switch (x) {
-        case -1:
-            if (scrollLevel > 1) {
-                scrollValue += 522
-                document.querySelector("#tasks").style.left = scrollValue.toString() + "px"
-                scrollLevel--
-            }
-            break
-        case 1:
-            if (scrollLevel < scrollLimit) {
-                scrollValue -= 522
-                document.querySelector("#tasks").style.left = scrollValue.toString() + "px"
-                scrollLevel++
-            }
-    }
-}
-
 function clickedOnTask(event) {
-    pickTask(event.target.id)
+    pickTask(event.target.innerHTML)
 }
 
 function VoidCheck(){
@@ -112,9 +99,11 @@ function pickTask(picked) {
     // делает задание активным
     if (picked < 1 || picked > taskCount) return
 
-    document.querySelector('[id="' + activeTask + '"]').style.backgroundColor = "white"
+    let tasks = document.getElementsByClassName("task")
+    tasks[activeTask - 1].id = ""
+    tasks[picked - 1].id = "activeTask"
     activeTask = picked
-    document.querySelector('[id="' + activeTask + '"]').style.backgroundColor = "rgba(0, 0, 0, 0.3)"
+
     loadTaskData()
 }
 
