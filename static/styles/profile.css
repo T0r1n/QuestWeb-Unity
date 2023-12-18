@@ -1,39 +1,56 @@
 /*принадлежащие профильной странице стили*/
- body {
-        overflow-x: hidden;
-    }
+body {
+      overflow-x: hidden;
+  }
+  *, a:focus {
 
+    outline: none !important;
+
+}
 .profile {
-    position: relative;
+  position: relative;
     display: flex;
     width: 1440px;
     height: 815px;
     margin-top: 64px;
-    
-    background: linear-gradient(96.78deg, rgba(87, 74, 232, 0.2) 14.39%, rgba(173, 80, 231, 0.2) 35.77%, rgba(207, 55, 228, 0.2) 59.68%, rgba(222, 178, 235, 0.2) 80.55%),
-linear-gradient(0deg, #DAC2EB, #DAC2EB);
-
+    background: linear-gradient(96.78deg, rgba(87, 74, 232, 0.2) 14.39%, rgba(173, 80, 231, 0.2) 35.77%, rgba(207, 55, 228, 0.2) 59.68%, rgba(222, 178, 235, 0.2) 80.55%), linear-gradient(0deg, #DAC2EB, #DAC2EB);
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.15);
-    border-radius: 15px;
+    border-radius: 70px;
     font-size: 18px;
 }
 
 .sidebar {
-    position: relative;
-    justify-content: center;
-    display: flex;
-    width: 330px;
-    height: 100%;
-    border-radius: 15px 0 0 15px;
-    background: rgba(255, 255, 255, 0.2);
+  
+  position: relative;
+  justify-content: space-between;
+  display: flex;
+  width: 390px;
+  height: 100%;
+  border-radius: 70px 0px 0 70px;
+  background: rgba(255, 255, 255, 1);
+
+}
+.sidebar a{
+  color:black;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .sidebarSection {
     position: absolute;
-    width: 85%;
-    height: fit-content;
+    width: 100%;
+    height: 50px;
     display: flex;
     align-items: center;
+    
+}
+.wrapperSideBarSection{
+  width: 100%;
+  padding-left:34px;
+  padding-right: 100px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+
 }
 
 .sidebarSection img {
@@ -41,16 +58,43 @@ linear-gradient(0deg, #DAC2EB, #DAC2EB);
     height: 28px;
     margin-left: auto;
 }
-
+.signoutSideBarSection div{
+  padding-bottom: 60px;
+  padding-left: 10px;
+  width: 100%;
+}
+.signoutSideBarSection{
+  background-color: rgba(0, 0, 0, 0);
+}
+.signoutSideBarSection img{
+  width:70px;
+  height:70px;
+}
 .menu {
-    top: 100px;
-    position: relative;
-    display: flex;
-    align-self: flex-end;
-    margin: 0 auto 0 auto;
-    width: 70%;
-    height: 95%;
+  background: linear-gradient(96.78deg, rgba(87, 74, 232, 0.2) 14.39%, rgba(173, 80, 231, 0.2) 35.77%, rgba(207, 55, 228, 0.2) 59.68%, rgba(222, 178, 235, 0.2) 80.55%),
+linear-gradient(0deg, #DAC2EB, #DAC2EB);
 
+  border-radius: 70px;
+  /* box-shadow: 0 0px 0px 10px rgba(0, 0, 0, 0.3); */
+  box-shadow: 0px 0px 60px 0px rgba(73, 45, 95, 0.6);
+  left: 330px;
+  /* top: 100px; */
+  position: absolute;
+  display: flex;
+  align-self: flex-end;
+  /* margin: 0 auto 0 auto; */
+  width: 1110px;
+  height: 100%;
+  z-index: 2;
+}
+.menu a, h2, h3{
+  color:black;
+  font-weight: 500;
+}
+.menu a, h2{
+  letter-spacing: 1px;
+  font-weight: 400;
+  font-size:22px;
 }
 
 #edit {
@@ -62,14 +106,24 @@ linear-gradient(0deg, #DAC2EB, #DAC2EB);
 }
 
 #edit h3 {
-    font-weight: 300;
+  padding-left: 9px;
+  font-weight: 300;
 }
+#edit input::placeholder{
+  font-size: 18px;
 
+}
+#edit input{
+  padding-left: 18px;
+  border-radius: 50px;
+  box-shadow: 0px 0px 20px 0px rgb(189, 115, 234);
+  
+}
 #edit input, select {
     width: 399px;
     height: 34px;
     margin-top: 8px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .editSection {
@@ -82,9 +136,10 @@ linear-gradient(0deg, #DAC2EB, #DAC2EB);
     overflow-y: scroll;
     width: 100%;
     height: 641px;
-    margin: 16px auto auto auto;
+    margin: 48px auto auto 30px;
     display: none;
 }
+
 
 #listEntry {
     display: flex;
@@ -96,19 +151,23 @@ linear-gradient(0deg, #DAC2EB, #DAC2EB);
     align-items: center;
     margin-bottom: 16px;
 }
-
-#listEntry img {
-    width: 28px;
-    height: 28px;
-    margin: 0 4px 0 4px;
+#listEntry div{
+  display:flex;
+  align-items: center;
 }
 
+
+
+.funcsMadeQuests img{
+  width:20px;
+  height:20px;
+}
 
 #made {
     overflow-y: scroll;
     width: 100%;
     height: 641px;
-    margin: 16px auto auto auto;
+    margin: 48px auto auto 30px;
     display: none;
 }
 
@@ -168,22 +227,19 @@ linear-gradient(0deg, #E7E7E8, #E7E7E8);
 #btnUpdateProfile img{
     padding-right: 2px;
 }
-
-.fancyBtn
-{
-  white-space: nowrap;
-  display: inline; 
-  border: none; 
-  font-size: 2.5vh; 
-  background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
-  color: black; 
-  box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); 
-  border-radius: 3vh; 
-  padding: 16px 32px;
-  background-size: 300%;
-  background-position-x: right;
+#btnConfirmDelete{
+    white-space: nowrap;
+    display: inline; 
+    border: none; 
+    font-size: 2.5vh; 
+    background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
+    color: black; 
+    box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); 
+    border-radius: 3vh; 
+    padding: 16px 32px;
+    background-size: 300%;
+    background-position-x: right;
 }
-
 #deletionConfirmation form{
     padding: 0 33px;
 } 

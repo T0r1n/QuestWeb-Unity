@@ -111,7 +111,7 @@ body {
     display: flex;
     width: 1440px;
     padding: 20px;
-    justify-content: center;
+    justify-content: space-between;
     font-size: 20px;
     user-select: none;
 }
@@ -121,8 +121,13 @@ body {
     display: flex;
     width: 80%;
     height: fit-content;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     align-items: center;
+}
+#HomeRef{
+  margin: 18px 0 0 0; 
+  font-size: 24px; 
+  font-weight: 700;
 }
 
 .globalBackground {

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/profile.css')}}">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
 
     <script src="{{ url_for('static',filename = 'scripts/profileinteract.js')}}"></script>
     <script src="{{ url_for('static',filename = 'scripts/background.js')}}"></script>
@@ -23,8 +24,11 @@
         <div class="header">
             <!--Содержимое шапки-->
             <div class="headerContent">
-                <a style="margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
+                <a id="HomeRef" 
                     onclick="window.location = 'http://127.0.0.1:5000/'">K-quest</a>
+            </div>
+            <div>
+                <img style="width:50px; height:50px;" src="{{ url_for('static',filename = 'images/profileicon.png')}}" alt="">
             </div>
         </div>
 
@@ -33,25 +37,33 @@
             <!--Навигационная панель-->
             <div class="sidebar">
                 <!--Имя пользователя-->
-                <div class="sidebarSection" style="top: 48px;">
-                    <a style="font-size: 24px; font-weight: 700;" onclick="openSection('edit')">{{data[0]}}</a>
-                    <img src="{{ url_for('static',filename = 'images/editprofileicon.png')}}" onclick="openSection('edit')">
+                <div class="sidebarSection" style="top: 48px; border-radius:30px;">
+                    <div class="wrapperSideBarSection">
+                        <a style="font-size: 24px; font-weight: 700;" onclick="openSection('edit')">{{data[0]}}</a>
+                        <img src="{{ url_for('static',filename = 'images/user-pen.svg')}}" onclick="openSection('edit')">
+                    </div>
                 </div>
 
                 <!--Пройденные-->
-                <div class=" sidebarSection" style="top: 128px;">
-                    <a onclick="openSection('passed')">Пройденные квесты</a>
+                <div class=" sidebarSection ListsOpenRef" id="sidebarSectionPassed" style="top: 128px;">
+                    <div class="wrapperSideBarSection">
+                        <a  style="font-weight: 500;" onclick="openSection('passed')">Пройденные квесты</a>
+                    </div>
                 </div>
 
                 <!--Созданные-->
-                <div class="sidebarSection" style="top: 172px;">
-                    <a onclick="openSection('made')">Созданные квесты</a>
-                   <img src="{{ url_for('static',filename = 'images/addicon.png')}}" onclick="openSection('made')">
+                <div class="sidebarSection ListsOpenRef" id="sidebarSectionMade" style="top: 182px;">
+                    <div class="wrapperSideBarSection">
+                        <a style="font-weight: 500;" onclick="openSection('made')">Созданные квесты</a>
+                        <img src="{{ url_for('static',filename = 'images/add.svg')}}" onclick="openSection('made')">
+                    </div>
                 </div>
 
                 <!--Выход-->
-                <div class="sidebarSection" style="align-self: flex-end">
-                    <img src="{{ url_for('static',filename = 'images/signouticon.png')}}" style="margin: 0 0 16px 0;" onclick="window.location = 'http://127.0.0.1:5000/dropsession'">
+                <div class="sidebarSection signoutSideBarSection" style="align-self: flex-end">
+                    <div >
+                        <img src="{{ url_for('static',filename = 'images/sign-out-alt.svg')}}" style="margin: 0 0 16px 0;" onclick="window.location = 'http://127.0.0.1:5000/dropsession'">
+                    </div>
                 </div>
             </div>
 
@@ -121,7 +133,7 @@
                 <div id="passed">
                     {% for el in qprog|reverse %}
                     <div id="listEntry">
-                            <h2 id="EndCodeQuest" style="color: #9A5BFF">{{el[0]}}</h2>
+                            <h2 id="EndCodeQuest" >{{el[0]}}</h2>
                             <a id="passedEntryName" style="margin-left: 15px">{{el[1]}}</a>
                     </div>
                     {% endfor %}
@@ -134,8 +146,8 @@
                     {% for el in lquests|reverse %}
                         <div id="listEntry">
                             
-                            <h2 id="CodeQuest" style="color: #9A5BFF; margin-right: 15px;">{{el[0]}}</h2>
-                                <button id="copy" onclick="copyText()" class="copy" style="background: #FFFFFF4D;">
+                            <h2 id="CodeQuest" style=" margin-right: 15px;">{{el[0]}}</h2>
+                                <button id="copy" onclick="copyText()" class="copy" style="background: #ffffffb5;">
                                      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                                         <script>
                                           $(document).ready(function() {
@@ -161,10 +173,15 @@
                                     </svg>
                                   </span>
                                 </button>
-                            <a id="madeEntryName" style="margin-left: 15px">{{el[1]}}</a>
-                            <div style="display: flex; align-items: center; margin-left: auto; width: fit-content">
-                                <img src="{{ url_for('static', filename = 'images/deleteicon.png') }}" onclick="openDeleteQuestConfirmation('{{el[0]}}')">
-                                <img src="{{ url_for('static',filename = 'images/participantsicon.png')}}" onclick="openSection('participants');players('{{el[0]}}')">
+                            <a id="madeEntryName" style="margin-left: 15px">Квест "{{el[1]}}"</a>
+                            <div class="funcsMadeQuests" style=" margin-left: auto; width: fit-content">
+                                <img src="{{ url_for('static',filename = 'images/user.svg')}}" onclick="openSection('participants');players('{{el[0]}}')">
+                            </div>
+                            <div class="funcsMadeQuests" style="margin:0 15px 0 15px;">
+                                <img src="{{ url_for('static',filename = 'images/edit.svg')}}" onclick="window.location = 'http://127.0.0.1:5000/create/edit/' + '{{el[2]}}' + '/' + '{{el[0]}}'">
+                            </div>
+                            <div class="funcsMadeQuests">
+                                <img src="{{ url_for('static',filename = 'images/trash.svg')}}" onclick="delQuest('{{el[0]}}')">
                             </div>
                         </div>
                     {% endfor %}
@@ -194,7 +211,7 @@
                     аккаунт?</h2>
 
                 <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
-                    <button class="animated-btn fancyBtn" id="btnConfirmDelete" type="submit" onclick="window.location = 'http://127.0.0.1:5000/profile/del'">
+                    <button class="animated-btn" id="btnConfirmDelete" type="submit" onclick="window.location = 'http://127.0.0.1:5000/profile/del'">
                         Удалить аккаунт
                     </button>
                     <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>
@@ -204,12 +221,19 @@
     </div>
 
     <div id="QuestConfirmation">
-            <h2 style="color: black; font-weight: 100; font-size: 2.5vh; margin-top: 7.5vh">Вы уверены, что хотите удалить этот квест?</h2>
+            <form method="post" action="/profile/del">
+                <h2 style="color: black; font-weight: 100; font-size: 2.5vh; margin-top: 7.5vh">Вы уверены, что хотите
+                    удалить
+                    аккаунт?</h2>
 
-            <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
-                <button class="animated-btn fancyBtn" id="btnConfirmQuestDelete">Удалить квест</button>
-                <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>
-            </div>
+                <div style="display: flex; margin: 4vh auto;  justify-content: center; align-items: center;">
+                    <button type="submit"
+                        style="display: inline; width: 12vw; height: 5vh; font-size: 2.5vh; background: #f0efef; color: black; box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); border-radius: 3vh; padding: 0 0"
+                        onclick="window.location = 'http://127.0.0.1:5000/profile/del'">Удалить
+                        аккаунт</button>
+                    <a style="font-size: 2.5vh; padding: 0 0; margin: 0 2vw" onclick="closeMenu()">Отмена</a>
+                </div>
+            </form>
         </div>
     </div>
 

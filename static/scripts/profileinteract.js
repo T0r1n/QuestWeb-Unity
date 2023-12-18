@@ -7,21 +7,28 @@ function returnToIndex() {
     // возврат на главную по клику на логотип
     location.replace("./index.html")
 }
-
+function clearColorSideBarSections(){
+    Array.from(document.querySelectorAll(".sidebarSection")).slice(0, 3).forEach(element => {
+        element.style.backgroundColor = "rgba(255, 255, 255, 1)"
+        
+    });
+}
 function openSection(section) {
     // открывает новую секцию и делает ее активной
     closeActiveSection()
     activeSection = section
-
+    clearColorSideBarSections()
     switch (section) {
         case 'edit':
             document.querySelector("#edit").style.display = "block"
             break
         case 'passed':
             document.querySelector("#passed").style.display = "block"
+            document.querySelector("#sidebarSectionPassed").style.backgroundColor = "rgba(98, 0, 255, 0.2)"
             break
         case 'made':
             document.querySelector("#made").style.display = "block"
+            document.querySelector("#sidebarSectionMade").style.backgroundColor = "rgba(98, 0, 255, 0.2)"
             break
         case 'participants':
             document.querySelector("#participants").style.display = "block"
@@ -45,7 +52,7 @@ function openDeletionConfirmation() {
 
 function closeMenu() {
     document.querySelector("#deletionConfirmation").style.display = "none"
-    document.querySelector("#QuestConfirmation").style.display = "none"
+    
     document.querySelector("#blurBg").style.display = "none"
 }
 
@@ -64,13 +71,15 @@ function openCreate() {
     location.replace('./create.html')
 }
 
-function openDeleteQuestConfirmation(code) {
+function openNewQuestConfirmation() {
     blurBg()
     document.querySelector("#QuestConfirmation").style.display = "block"
-    document.querySelector('#btnConfirmQuestDelete').onclick = (e) => {
-        location.replace(`./profile/questdelete/${code}`)
-    }
 }
+
+function delQuest(code){
+    window.location = 'http://127.0.0.1:5000/profile/questdelete/'+ code
+}
+
 
 function players(code){
     var container = document.getElementById('participants');
