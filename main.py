@@ -157,7 +157,7 @@ def delprofile():
 @app.route('/create/<string:qcount>')
 def create(qcount):
     if g.user:
-        if qcount == '16' or qcount == '24' or qcount == '32':
+        if ( qcount ):
             return render_template('create.html', count=qcount)
         else:
             return redirect(url_for('log'))
@@ -234,7 +234,7 @@ def questedit(qcount, questcode):
         row_array = list(row)
         result_array.append(row_array)
 
-    if g.user == res[0][9] and (qcount == '16' or qcount == '24' or qcount == '32'):
+    if g.user == res[0][9] and (qcount >= '4' and qcount <= '32'):
         return render_template('edit.html', count=qcount, qdata=result_array, code=questcode)
     return redirect(url_for('log'))
 

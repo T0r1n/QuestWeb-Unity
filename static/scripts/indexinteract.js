@@ -173,3 +173,15 @@ function BackgroundVideo(){
         }
     }
 
+    function redirectToPage() {
+      var houseElement = document.getElementById('house');
+      var roomsValue = houseElement.getAttribute('data-rooms');
+      if (roomsValue) {
+        var redirectURL = 'http://127.0.0.1:5000/create/' + roomsValue*4;
+        console.log(roomsValue*4);
+        if (4 <= roomsValue * 4 && roomsValue * 4 <= 32) {
+            window.location = redirectURL;
+        }
+      }
+    }
+
