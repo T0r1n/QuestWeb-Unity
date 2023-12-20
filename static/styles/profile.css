@@ -205,7 +205,7 @@ linear-gradient(0deg, #E7E7E8, #E7E7E8);
 #participants {
     width: 100%;
     height: 100%;
-    margin: auto auto auto auto;
+    margin: 48px auto auto 30px;
     display: none;
 }
 
@@ -227,18 +227,20 @@ linear-gradient(0deg, #E7E7E8, #E7E7E8);
 #btnUpdateProfile img{
     padding-right: 2px;
 }
-#btnConfirmDelete{
-    white-space: nowrap;
-    display: inline; 
-    border: none; 
-    font-size: 2.5vh; 
-    background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
-    color: black; 
-    box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); 
-    border-radius: 3vh; 
-    padding: 16px 32px;
-    background-size: 300%;
-    background-position-x: right;
+
+.fancyBtn
+{
+  white-space: nowrap;
+  display: inline; 
+  border: none; 
+  font-size: 2.5vh; 
+  background: linear-gradient(90deg, #84f7e8 10%, #ff71f1  89%);
+  color: black; 
+  box-shadow: 0px 4px 40px 4px rgba(0, 0, 0, 0.15); 
+  border-radius: 3vh; 
+  padding: 16px 32px;
+  background-size: 300%;
+  background-position-x: right;
 }
 #deletionConfirmation form{
     padding: 0 33px;
