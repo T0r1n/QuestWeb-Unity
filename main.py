@@ -234,7 +234,7 @@ def questedit(qcount, questcode):
         row_array = list(row)
         result_array.append(row_array)
 
-    if g.user == res[0][9] and (qcount >= '4' and qcount <= '32'):
+    if g.user == res[0][9] and ( qcount ):
         return render_template('edit.html', count=qcount, qdata=result_array, code=questcode)
     return redirect(url_for('log'))
 
