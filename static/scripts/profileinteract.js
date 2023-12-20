@@ -32,6 +32,8 @@ function openSection(section) {
             break
         case 'participants':
             document.querySelector("#participants").style.display = "block"
+            document.querySelector("#sidebarSectionMade").style.backgroundColor = "rgba(98, 0, 255, 0.2)"
+            break
 
     }
 }
@@ -49,10 +51,16 @@ function openDeletionConfirmation() {
     blurBg()
     document.querySelector("#deletionConfirmation").style.display = "block"
 }
-
+function openDeleteQuestConfirmation(code) {
+    blurBg()
+    document.querySelector("#QuestConfirmation").style.display = "block"
+    document.querySelector('#btnConfirmQuestDelete').onclick = (e) => {
+        location.replace(`./profile/questdelete/${code}`)
+    }
+}
 function closeMenu() {
     document.querySelector("#deletionConfirmation").style.display = "none"
-    
+    document.querySelector("#QuestConfirmation").style.display = "none"
     document.querySelector("#blurBg").style.display = "none"
 }
 
@@ -71,14 +79,9 @@ function openCreate() {
     location.replace('./create.html')
 }
 
-function openNewQuestConfirmation() {
-    blurBg()
-    document.querySelector("#QuestConfirmation").style.display = "block"
-}
 
-function delQuest(code){
-    window.location = 'http://127.0.0.1:5000/profile/questdelete/'+ code
-}
+
+
 
 
 function players(code){
