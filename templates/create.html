@@ -1,118 +1,118 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>K-quest - Создание квеста</title>
 
-<head>
-    <title>K-quest - Создание квеста</title>
+        
+        <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/create.css')}}">
 
-    <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/common.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static',filename = 'styles/create.css')}}">
+        <script src="{{ url_for('static',filename = 'scripts/background.js')}}"></script>
 
-    <script src="{{ url_for('static',filename = 'scripts/background.js')}}"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    </head>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <body>
+    <!--<div id="data" qcount={{ count }} style="display: none;"></div>-->
+    <script>var qcount = "{{ count }}";</script>
+    <script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
 
-
-</head>
-
-<body>
-<!--<div id="data" qcount={{ count }} style="display: none;"></div>-->
-<script>var qcount = "{{ count }}"</script>
-<script src="{{ url_for('static',filename = 'scripts/createinteract.js')}}"></script>
-
-<div class="wrapper">
-    <div class="header">
-        <!--Содержимое шапки-->
-        <div class="headerContent">
-            <a style="margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
-               onclick="window.location = 'http://127.0.0.1:5000/'">K-quest</a>
-        </div>
-    </div>
-
-    <!--Основной контент страницы-->
-    <div class="options">
-        <div>
-            <div class="option">
-                <div class="optionContent">
-                    <h2>Создание нового урока</h2>
-                    <input name="questName" placeholder="Введите название квеста"
-                        style="display: block; height: 40px; margin-top: 16px" id="questName"/>
-                        <textarea placeholder="Введите описание квеста" style="height: 207px; margin: 48px 0 15px 0"
-                          id="questDescription"></textarea>
-                    <div class="TextOnSwitch">
-                        <h4 style="margin-left: 30px; padding-right: 110px;">
-                            Создать сертификат
-                        </h4>
-                        <h4>Линейное прохождение</h4>
-                    </div>
-                        <div>
-                            <label class="switch" style="margin-left: 80px;">
-                                <input type="checkbox" class="input__check">
-                                <span class="slider"></span>
-                            </label>
-                            <label class="switch" style="margin-left: 240px">
-                                <input type="checkbox" class="input__check">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                
+        <div class="wrapper">
+            <div class="header">
+                <!--Содержимое шапки-->
+                <div class="headerContent">
+                    <a style="color: white; margin: 10px 0 0 11px; font-size: 24px; font-weight: 700"
+                    onclick="window.location = 'http://127.0.0.1:5000/'">K-quest</a>
+                </div>
             </div>
-            
-        </div>
-        
-        
-        <div class="option">
-            <div id="option-wrapper">
-                <div class="optionContent">
-                    <h2>Загрузите задания</h2>
-                    <div class="taskLineBlock">
-                        <div id="taskLine"></div>
+
+            <!--Основной контент страницы-->
+            <div class="options">
+                <div style="display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;">
+                    <div class="option">
+                        <div class="optionContent">
+                            <h2>Создание нового урока</h2>
+                            <input name="questName" placeholder="Введите название квеста"
+                                style="display: block; height: 40px; margin-top: 16px" id="questName"/>
+                            <textarea placeholder="Введите описание квеста" style="height: 207px; margin: 48px 0 15px 0"
+                                id="questDescription"></textarea>
+                                <div class="optionSwitches">
+                                    <div class="optionSwitch">
+                                        
+                                        <label class="switch" >
+                                        
+                                            <input type="checkbox" class="input__check">
+                                            <span class="slider"></span>
+                                        </label>
+                                        <h4>Создать сертификат</h4>
+                                    </div>
+                                    <div class="optionSwitch">
+                                        
+                                        <label class="switch" >
+                                            
+                                            <input type="checkbox" class="input__check">
+                                            <span class="slider"></span>
+                                        </label>
+                                        <h4>Линейное прохождение</h4>
+                                    </div>
+                                    
+                                </div>  
+                        </div>
+                             
                     </div>
-                    <!--Для создания очереди заданий; в будущем удалить-->
-                    <script>generateTaskLine(1)</script>
+                    <div style="
+                            margin-bottom: 35px;
+                            display: flex;
+                        ">
+                        <button onclick="SendJSON();" id="createButton" class="btn-template-anim">Создать
+                            квест
+                        </button>
+                    </div>       
+                </div>
 
-                    <textarea placeholder="Введите текст задания" style="height: 108px; margin-top: 48px" id="taskText"
-                            onchange="saveTaskData(); isFull()"></textarea>
+                <div class="option" id="questions">
+                    <div id="option-wrapper">
+                        <div class="optionContent">
+                            <h2>Загрузите задания</h2>
+                            <div class="taskLineBlock">
+                                <div id="taskLine"></div>
+                            </div>
+                            <!--Для создания очереди заданий; в будущем удалить-->
+                            <script>generateTaskLine(1)</script>
 
-                    <h3>Подсказка</h3>
-                    <textarea placeholder="Введите текст подсказки" style="height: 108px" id="taskHint"
-                            onchange="saveTaskData(); isFull()"></textarea>
-                    <div>
-                        <textarea placeholder="Введите ссылку на изображение"
+                            <textarea placeholder="Введите текст задания" style="height: 108px; margin-top: 15px" id="taskText"
+                                    onchange="saveTaskData(); isFull()"></textarea>
+
+                            <h3>Подсказка</h3>
+                            <textarea placeholder="Введите текст подсказки" style="height: 108px" id="taskHint"
+                                    onchange="saveTaskData(); isFull()"></textarea>
+                            
+
+                            <textarea placeholder="Введите ссылку на изображение"
                                 style="white-space: nowrap;margin-top: 10px;height: 30px"
                                 id="taskPic"></textarea>
-                    </div>
 
-                    <!--Загрузка файлов не работает, сделать позже-->
-                    <!--                    <div style="display: flex; align-items: center; margin-top: 32px">-->
-                    <!--                        <img src="{{ url_for('static',filename = 'images/attachicon.png')}}" style="width: 24px; height: 24px;" />-->
-                    <!--                        <a style="display: flex; font-size: 20px; margin-left: 8px">Прикрепить файл</a>-->
-                    <!--                    </div>-->
-
-                    <h3>Ответ</h3>
-                    <textarea placeholder="Введите текст ответа" style="height: 108px" id="taskAnswer"
-                            onchange="saveTaskData(); isFull()"></textarea>
-                </div>
-                
-                <div id="btn-next-div">
-                    <div id="btn-next-wrapper">
-                        <button class="btn-template-anim" id="btn-NextExc" onclick="creatJSON();clickedOnNext();isFull()">ДАЛЕЕ
-                </button>
+                            <h3>Ответ</h3>
+                            <textarea placeholder="Введите текст ответа" style="height: 108px" id="taskAnswer"
+                                    onchange="saveTaskData(); isFull()"></textarea>
+                        </div>
+                        
+                        <div id="btn-next-div">
+                            <div id="btn-next-wrapper">
+                                <button class="btn-template-anim" id="btn-NextExc" onclick="creatJSON();clickedOnNext();isFull()">ДАЛЕЕ
+                        </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!--Главная кнопка страницы-->
-    <div style="position: relative; width: 684px; top: -300px">
-        <button onclick="SendJSON();" id="createButton" class="btn-template-anim">Создать
-            квест
-        </button>
-    </div>
-</div>
-<canvas class="background"></canvas>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
-</body>
+            <!--Главная кнопка страницы-->
+            
+        </div>
+        <canvas class="background"></canvas>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    </body>
 
 </html>

@@ -41,9 +41,9 @@ function generateTaskLine() {
             node.style.display = "inline-block"
             node.style.width = "fit-content"
             node.style.zIndex = taskCount - j;
-
+            
             if (j % tasksPerRow != 0) {
-                task.style.marginLeft = "-0.4em"
+                task.style.marginLeft = "-0.4em";
             } else {
                 task.style.marginLeft = "-1.4em";
             }
@@ -54,11 +54,14 @@ function generateTaskLine() {
             node.appendChild(task)
             container.append(node)
         }
-
         taskLine.appendChild(container)
     } 
-
+    document.querySelectorAll(".taskList").forEach(element => {
+        element.style.marginRight = "-15px";
+    });
     pickTask(1) // первое задание выбрано изначально
+    
+        
 }
 
 function clickedOnTask(event) {

@@ -14,6 +14,7 @@ let scrollValue = 0 // прокрутка в пикселях
 
 
 // данные о квестах
+
 let taskText = Array(taskCount).fill("")
 let taskHint = Array(taskCount).fill("")
 let taskFile = Array(taskCount) // не работает
@@ -29,35 +30,46 @@ function returnToIndex() {
 function generateTaskLine() {
     // создает очередь заданий нужного размера
     // !!! сейчас невозможно передать на эту страницу количество заданий, поэтому будет сгенерировано максимальное число - это условность;
-    let tasks = document.querySelector("#tasks")
+    let taskLine = document.querySelector("#taskLine")
 
-    for (let i = 1; i <= taskCount; i++) {
-        let container = document.createElement("DIV")
-        let task = document.createElement("A")
+    const tasksPerRow = 14; // Количество заданий на одну строку
 
-        container.style.display = "inline-block"
-        container.style.width = "fit-content"
+    let lines = taskCount / tasksPerRow; // Количество строк
+    for (let i = 0; i < lines; i++) {
+        let container = document.createElement("ul")
+        container.className = "taskList"
+        container.style.display = "flex"
 
-        task.style.display = "flex"
-        task.style.justifyContent = "center"
-        task.style.alignItems = "center"
-        task.style.fontSize = "20px"
-        task.style.width = "40px"
-        task.style.height = "40px"
-        task.style.borderRadius = "25px"
-        task.style.color = "black"
+        let tasks = Math.min((i + 1) * tasksPerRow, taskCount) // Количество заданий на этой строке
+        for (let j = i * tasksPerRow; j < tasks; j++) {
+            let node = document.createElement("li")
+            let task = document.createElement("a")
+            task.className = "task"
 
-        if (i != 1) task.style.marginLeft = "3.5px" // отступ для умещения ровно 12 заданий
+            node.style.display = "inline-block"
+            node.style.width = "fit-content"
+            node.style.zIndex = taskCount - j;
+            
+            if (j % tasksPerRow != 0) {
+                task.style.marginLeft = "-0.4em";
+            } else {
+                task.style.marginLeft = "-1.4em";
+            }
 
-        task.innerHTML = (i)
-        task.setAttribute("id", i)
-        //task.setAttribute("onClick", "clickedOnTask(event)")
+            task.innerHTML = (j + 1)
+            //task.setAttribute("onClick", "clickedOnTask(event)")
 
-        container.appendChild(task)
-        tasks.appendChild(container)
-    }
-
+            node.appendChild(task)
+            container.append(node)
+        }
+        taskLine.appendChild(container)
+    } 
+    document.querySelectorAll(".taskList").forEach(element => {
+        element.style.marginRight = "-15px";
+    });
     pickTask(1) // первое задание выбрано изначально
+    
+        
 }
 
 function scrollTasks(x) {
@@ -140,6 +152,7 @@ function clickedOnNext() {
         pq_disc.readOnly = true
         pq_name.readOnly = true
     }
+    console.log("пройден");
 
 }
 
@@ -147,11 +160,12 @@ function pickTask(picked) {
     // делает задание активным
     if (picked < 1 || picked > taskCount) return
 
-    document.querySelector('[id="' + activeTask + '"]').style.backgroundColor = "white"
+    let tasks = document.getElementsByClassName("task")
+    tasks[activeTask - 1].id = ""
+    tasks[picked - 1].id = "activeTask"
     activeTask = picked
-    document.querySelector('[id="' + activeTask + '"]').style.backgroundColor = "rgba(0, 0, 0, 0.3)"
-    //loadTaskData()
 
+    
 }
 
 function saveTaskData() {
@@ -218,14 +232,12 @@ function creatJSON(){
             };
             JsonMass.push(data);
             var jsonString = JSON.stringify(JsonMass);
-            console.log(JsonMass);
-        }
-        itcount++
-        if (itcount == taskCount+1 ){
-            gjsonString = jsonString
-        console.log(gjsonString)
+            
+            itcount++
         }
 
+        gjsonString = jsonString
+        
     }
 }
 
@@ -239,6 +251,7 @@ function SendJSON(){
             console.log(xhr.responseText);
         }
     };
+    console.log(JSON.stringify(gjsonString));
     xhr.send(JSON.stringify(gjsonString));
     window.location = 'http://127.0.0.1:5000/profile'
 

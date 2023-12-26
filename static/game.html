@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" xmlns="http://www.w3.org/1999/html">
+<html lang="en-us">
 
 <head>
     <meta charset="utf-8">
@@ -12,26 +12,69 @@
     <script src="TemplateData/indexinteract.js"></script>
 </head>
 
-<body style="background: #2c2c2c;">
+<body>
+<!--Фон-->
 <div class="globalBackgroundPlay">
-    <canvas class="background" ></canvas>
-<style>
-    background{
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  }
-</style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <svg height="800" width="1600" style="position: absolute; left: 1100;">
+        <defs>
+            <linearGradient id="ellipseGrad1" x1="26%" y1="10%" x2="97.85%" y2="50%">
+                <stop offset="26%" style="stop-color:rgba(125, 45, 255, 0.8); stop-opacity:1"/>
+                <stop offset="97.85%" style="stop-color:rgb(0, 255, 71, 0.8); stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+        <ellipse cx="650" cy="0" rx="400px" ry="550px" fill="url(#ellipseGrad1)"
+                 style="position: absolute; filter: blur(100px);"/>
+    </svg>
+
+    <svg height="1250" width="1300" style="position: absolute; left: -400px; top: -50px;">
+        <defs>
+            <linearGradient id="ellipseGrad2" x1="17.32%" y1="25%" x2="76.79%" y2="100%">
+                <stop offset="17.32%" style="stop-color:rgba(13, 255, 255, 0.75); stop-opacity:1"/>
+                <stop offset="76.79%" style="stop-color:rgb(0, 255, 71, 0.75); stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+        <ellipse cx="650" cy="600" rx="325px" ry="300px" fill="url(#ellipseGrad2)" style="filter: blur(150px);"/>
+    </svg>
+
+    <svg height="1500" width="1600" style="position: absolute;  left: 600px; top: 800px;">
+        <defs>
+            <linearGradient id="ellipseGrad3" x1="30%" y1="10%" x2="100%" y2="100%">
+                <stop offset="25%" style="stop-color:rgba(107, 243, 248, 0.8); stop-opacity:1"/>
+                <stop offset="10%" style="stop-color:rgb(125, 45, 255, 0.44); stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+        <ellipse cx="900" cy="750" rx="400px" ry="400px" fill="url(#ellipseGrad3)" style="filter: blur(150px);"/>
+    </svg>
+
+    <svg height="1700" width="2550" style="position: absolute; left: -1200px; top: 700px;">
+        <defs>
+            <linearGradient id="ellipseGrad4" x1="30%" y1="10%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:rgba(125, 45, 255, 0.75); stop-opacity:1"/>
+                <stop offset="10%" style="stop-color:rgb(0, 255, 71, 0.75); stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+        <ellipse cx="1300" cy="1000" rx="800px" ry="250px" fill="url(#ellipseGrad4)" style="filter: blur(150px);"/>
+    </svg>
+
 </div>
+
 
 <div class="wrapper">
     <div class="headerPlay">
+        <!--Декоративный эллипс-->
+        <div style="position: absolute;">
+            <svg height="250" width="300"
+                 style="position: relative; transform: rotate(-60deg); left: -430px; top: -148px">
+                <defs>
+                    <linearGradient id="ellipseGrad5" x1="100.0%" y1="100%" x2="0%" y2="100%">
+                        <stop offset="60.32%" style="stop-color:#0038FF; stop-opacity:1"/>
+                        <stop offset="0.96%" style="stop-color:rgb(13, 240, 255, 0.83); stop-opacity:1"/>
+                    </linearGradient>
+                </defs>
+                <ellipse cx="50" cy="40" rx="25px" ry="14px" fill="url(#ellipseGrad5)" style="filter: blur(10px);"/>
+            </svg>
+        </div>
+
         <!--Содержимое шапки-->
         <div class="headerContent">
             <a style="margin-left: 11px; font-size: 24px; font-weight: 700; cursor: pointer"
@@ -41,6 +84,7 @@
         </div>
     </div>
 </div>
+
 <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas" width=1280 height=720></canvas>
     <div id="unity-loading-bar">
@@ -63,6 +107,7 @@
     var progressBarFull = document.querySelector("#unity-progress-bar-full");
     var fullscreenButton = document.querySelector("#unity-fullscreen-button");
     var warningBanner = document.querySelector("#unity-warning");
+
     // Shows a temporary message banner/ribbon for a few seconds, or
     // a permanent error message on top of the canvas if type=='error'.
     // If type=='warning', a yellow highlight color is used.
@@ -86,6 +131,7 @@
       }
       updateBannerVisibility();
     }
+
     var buildUrl = "Build";
     var loaderUrl = buildUrl + "/TestBild.loader.js";
     var config = {
@@ -98,30 +144,38 @@
       productVersion: "1.0",
       showBanner: unityShowBanner,
     };
+
     // By default Unity keeps WebGL canvas render target size matched with
     // the DOM size of the canvas element (scaled by window.devicePixelRatio)
     // Set this to false if you want to decouple this synchronization from
     // happening inside the engine, and you would instead like to size up
     // the canvas DOM size and WebGL render target sizes yourself.
     // config.matchWebGLToCanvasSize = false;
+
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       // Mobile device style: fill the whole browser client area with the game canvas:
+
       var meta = document.createElement('meta');
       meta.name = 'viewport';
       meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
       document.getElementsByTagName('head')[0].appendChild(meta);
       container.className = "unity-mobile";
       canvas.className = "unity-mobile";
+
       // To lower canvas resolution on mobile devices to gain some
       // performance, uncomment the following line:
       // config.devicePixelRatio = 1;
+
       unityShowBanner('WebGL builds are not supported on mobile devices.');
     } else {
       // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
       canvas.style.width = "1280px";
       canvas.style.height = "720px";
     }
+
     loadingBar.style.display = "block";
+
     var script = document.createElement("script");
     script.src = loaderUrl;
     script.onload = () => {
@@ -139,25 +193,6 @@
     document.body.appendChild(script);
 
 </script>
-<script>
-window.onload = function () {
-const particles = Particles.init({
-  selector: ".background",
-  color: ["#03dac6", "#ff0266", "#000000"],
-  connectParticles: true,
-  responsive: [
-    {
-      breakpoint: 768,
-      options: {
-        maxParticles: 43,
-        connectParticles: false
-      }
-    }
-  ]
-});
-}
-</script>
-
 </body>
 
 </html>
